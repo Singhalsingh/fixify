@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrician Services</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+}
+nav {
+  background: #020617;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h2 {
+  color: #1085de;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #1246e3;
+}
+
+.hero {
+  height: 300px;
+  background: url('https://images.unsplash.com/photo-1581092335397-9583eb92d232') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+}
+
+
+.container {
+  padding: 40px;
+  text-align: center;
+}
+
+.container p {
+  margin: 15px 0;
+  color: #cbd5f5;
+}
+
+.services {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #e5e7eb;
+  color: black;
+  padding: 20px;
+  width: 200px;
+  border-radius: 10px;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.btn {
+  padding: 14px 35px;
+  border-radius: 50px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.call {
+  background: #22c55e;
+}
+
+.book {
+  background: #0b4ddc;
+  color: rgb(228, 224, 224);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+footer {
+  margin-top: 50px;
+  background: #020617;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h2>Fixify</h2>
+  <div>
+    <a href="project2.html">Home</a>
+    <a href="service.html">Services</a>
+  </div>
+</nav>
+
+<div class="hero">
+  Expert Electrician Services
+</div>
+
+<div class="container">
+  <h2>Safe & Reliable Electrical Solutions</h2>
+  <p>We provide professional electrical services for homes and offices.</p>
+
+<div class="services">
+
+  <a href="wiring.html" class="card">
+    🔌 Wiring Installation
+  </a>
+
+  <a href="fan.html" class="card">
+    🌀 Fan Repair
+  </a>
+
+  <a href="switch.html" class="card">
+    💡 Switch Board Fixing
+  </a>
+
+  <a href="backup.html" class="card">
+    🔋 Power Backup Setup
+  </a>
+
+</div>
+  <div class="btn-group">
+    <a href="enquiry.html" class="btn call">Enquire</a>
+    <a href="booking.html" class="btn book">Book Online</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Fixify | Contact: 99972XXXXX
+</footer>
+
+</body>
+</html>

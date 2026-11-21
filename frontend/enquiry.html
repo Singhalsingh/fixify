@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquiry Form</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+}
+
+header {
+  background: #020617;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h2 {
+  color: #2250e9;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #0d63dd;
+}
+
+.form-container {
+  max-width: 420px;
+  margin: 80px auto;
+  background: #020617;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  background: #22c55e;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+footer {
+  margin-top: 50px;
+  background: #020617;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>Fixify</h2>
+  <nav>
+    <a href="project2.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">about us</a>
+  </nav>
+</header>
+
+<!-- Form -->
+<div class="form-container">
+  <h2>Enquiry Form</h2>
+
+  <form>
+    <input type="text" placeholder="Your Name" required>
+    <input type="tel" placeholder="Phone Number" required>
+
+    <select required>
+      <option value="">Select Service</option>
+      <option>Plumber</option>
+      <option>Electrician</option>
+      <option>Carpenter</option>
+    </select>
+
+    <textarea placeholder="Describe your problem" rows="4"></textarea>
+
+    <input type="text" placeholder="Address" required>
+    <input type="date" required>
+
+    <button type="submit">Submit Enquiry</button>
+  </form>
+</div>
+
+<footer>
+  © 2026 Fixify | Contact: 99972XXXXX
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fixify | Leak Detection</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+/* NAV */
+
+nav{
+
+background:#020617;
+
+padding:18px 40px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+position:sticky;
+
+top:0;
+
+z-index:1000;
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:bold;
+
+color:#38bdf8;
+
+}
+
+.menu{
+
+display:flex;
+
+gap:20px;
+
+}
+
+.menu a{
+
+color:white;
+
+text-decoration:none;
+
+}
+
+.menu a:hover{
+
+color:#22c55e;
+
+}
+
+.menu-btn{
+
+display:none;
+
+font-size:28px;
+
+cursor:pointer;
+
+}
+
+/* HERO */
+
+.hero{
+
+height:65vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+text-align:center;
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.65),
+rgba(0,0,0,.65)
+),
+
+url("https://images.unsplash.com/photo-1621905251918-48416bd8575a");
+
+background-size:cover;
+
+}
+
+.hero h1{
+
+font-size:52px;
+
+}
+
+.hero p{
+
+margin-top:10px;
+
+color:#cbd5e1;
+
+}
+
+/* SEARCH */
+
+.search{
+
+padding:35px;
+
+text-align:center;
+
+}
+
+.search input{
+
+width:90%;
+
+max-width:500px;
+
+padding:15px;
+
+border:none;
+
+border-radius:30px;
+
+}
+
+/* CONTENT */
+
+.container{
+
+padding:60px 30px;
+
+text-align:center;
+
+}
+
+/* CARDS */
+
+.services{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(230px,1fr));
+
+gap:25px;
+
+margin-top:40px;
+
+}
+
+.box{
+
+background:#020617;
+
+padding:30px;
+
+border-radius:20px;
+
+transition:.4s;
+
+}
+
+.box:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 0 20px #38bdf8;
+
+}
+
+.icon{
+
+font-size:45px;
+
+}
+
+.price{
+
+display:block;
+
+margin-top:15px;
+
+font-size:22px;
+
+color:#22c55e;
+
+}
+
+/* BUTTON */
+
+.btn{
+
+margin-top:40px;
+
+padding:15px 40px;
+
+border:none;
+
+border-radius:40px;
+
+background:#22c55e;
+
+color:white;
+
+font-size:18px;
+
+cursor:pointer;
+
+}
+
+.btn:hover{
+
+transform:scale(1.05);
+
+}
+
+/* STATS */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+padding:50px;
+
+}
+
+.stat{
+
+background:#020617;
+
+padding:25px;
+
+border-radius:15px;
+
+}
+
+.stat h2{
+
+color:#38bdf8;
+
+}
+
+/* TOP */
+
+#topBtn{
+
+position:fixed;
+
+right:20px;
+
+bottom:20px;
+
+display:none;
+
+padding:14px;
+
+border:none;
+
+border-radius:50%;
+
+background:#38bdf8;
+
+cursor:pointer;
+
+}
+
+/* ANIMATION */
+
+.hidden{
+
+opacity:0;
+
+transform:translateY(40px);
+
+transition:1s;
+
+}
+
+.show{
+
+opacity:1;
+
+transform:none;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.menu-btn{
+display:block;
+}
+
+.menu{
+
+display:none;
+
+position:absolute;
+
+top:70px;
+
+left:0;
+
+width:100%;
+
+background:#020617;
+
+padding:20px;
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.menu.active{
+display:flex;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+nav{
+padding:18px;
+}
+
+.container{
+padding:25px;
+}
+
+}
+
+footer{
+
+background:#020617;
+
+padding:20px;
+
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+FIXIFY
+</div>
+
+<div
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</div>
+
+<div
+class="menu"
+id="menu">
+
+<a href="project2.html">
+Home
+</a>
+
+<a href="service.html">
+Services
+</a>
+
+</div>
+
+</nav>
+
+<section class="hero">
+
+<h1>
+
+Leak Detection & Repair
+
+</h1>
+
+<p>
+
+Fast • Accurate • Reliable
+
+</p>
+
+</section>
+
+<div class="search">
+
+<input
+id="search"
+placeholder="Search leak service...">
+
+</div>
+
+<section class="container">
+
+<h2>
+
+Accurate Leak Solutions
+
+</h2>
+
+<p>
+
+Prevent water damage with expert repair.
+
+</p>
+
+<div class="services">
+
+<div class="box service">
+
+<div class="icon">
+💧
+</div>
+
+Water Leak Detection
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+
+<div class="icon">
+🔩
+</div>
+
+Pipe Sealing
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+
+<div class="icon">
+🧱
+</div>
+
+Wall Leak Repair
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+
+<div class="icon">
+🚰
+</div>
+
+Tank Leak Fix
+
+<span class="price">
+₹550
+</span>
+
+</div>
+
+</div>
+
+<button
+class="btn"
+
+onclick="window.location.href='booking.html?service=Leak Repair'">
+
+Book Now
+
+</button>
+<button
+class="btn"
+
+onclick="window.location.href='enquiry.html'">
+
+Enquire
+</button>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<h2>900+</h2>
+<p>Jobs Completed</p>
+</div>
+
+<div class="stat">
+<h2>98%</h2>
+<p>Customer Satisfaction</p>
+</div>
+
+<div class="stat">
+<h2>24/7</h2>
+<p>Emergency Support</p>
+</div>
+
+</section>
+
+<button id="topBtn">
+↑
+</button>
+
+<footer>
+
+© 2026 Fixify
+
+</footer>
+
+<script>
+
+menuBtn.onclick=()=>{
+menu.classList.toggle("active");
+};
+
+search.addEventListener(
+
+"keyup",
+
+()=>{
+
+let value=
+search.value
+.toLowerCase();
+
+document
+.querySelectorAll(".service")
+
+.forEach(
+
+box=>{
+
+box.style.display=
+
+box.innerText
+.toLowerCase()
+.includes(value)
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
+
+});
+
+const items=
+document.querySelectorAll(".box,.stat");
+
+items.forEach(
+x=>
+x.classList.add("hidden")
+);
+
+window.addEventListener(
+
+"scroll",
+
+()=>{
+
+items.forEach(
+
+x=>{
+
+if(
+x.getBoundingClientRect().top
+
+<
+
+window.innerHeight-100
+
+){
+
+x.classList.add("show");
+
+}
+
+});
+
+});
+
+window.addEventListener(
+
+"scroll",
+
+()=>{
+
+topBtn.style.display=
+
+window.scrollY>300
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
+
+topBtn.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+</script>
+
+</body>
+
+</html>

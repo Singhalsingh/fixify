@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products - Food Pickles</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#F5F5DC;
+    color:#333;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+
+/* Navbar */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:#F5F5DC;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:25px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:#2e7d32;
+}
+
+    .products{
+    padding:80px 8%;
+    text-align:center;
+    flex:1;
+}
+
+
+.products h2{
+    color:#2e7d32;
+    margin-bottom:50px;
+    font-size:40px;
+}
+
+.product-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card h3{
+    margin-top:15px;
+}
+
+.price{
+    color:#2e7d32;
+    font-size:22px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.order-btn{
+    border:none;
+    background:#2e7d32;
+    color:white;
+    padding:12px 25px;
+    border-radius:30px;
+    cursor:pointer;
+    margin-bottom:20px;
+    transition:0.3s;
+}
+
+.order-btn:hover{
+    background:#1b5e20;
+    transform:translateY(-3px);
+}
+
+/* Footer */
+footer{
+    background:#1b1b1b;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:50px;
+}
+
+/* Mobile */
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .products h2{
+        font-size:32px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<nav class="navbar">
+    <div class="logo">🥭 Food Pickles</div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+</header>
+
+<section class="products">
+
+<h2>Our Pickles Collection</h2>
+
+<div class="product-container">
+
+    <div class="card">
+        <img src="images/mango-pickle.jpg" alt="Mango Pickle">
+        <h3>Mango Pickle</h3>
+        <p class="price">₹199</p>
+           <button class="order-btn">Order Now</button>
+    </div>
+
+    <div class="card">
+        <img src="images/lemon-pickle.jpg" alt="Lemon Pickle">
+        <h3>Lemon Pickle</h3>
+        <p class="price">₹179</p>
+           <button class="order-btn">Order Now</button>
+    </div>
+
+    <div class="card">
+        <img src="images/mixed-pickle.jpg" alt="Mixed Pickle">
+        <h3>Mixed Pickle</h3>
+        <p class="price">₹249</p>
+           <button class="order-btn">Order Now</button>
+    </div>
+
+    <div class="card">
+        <img src="images/garlic-pickle.jpg" alt="Garlic Pickle">
+        <h3>Garlic Pickle</h3>
+        <p class="price">₹229</p>
+           <button class="order-btn">Order Now</button>
+    </div>
+</div>
+
+</section>
+
+<footer>
+<p>© 2026 Food Pickles. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

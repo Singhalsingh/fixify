@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixify - Home Services</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* HEADER */
+
+header{
+    background:#020617;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    color:#38bdf8;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#38bdf8;
+}
+
+.menu-btn{
+    display:none;
+    font-size:30px;
+    cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url("https://images.unsplash.com/photo-1581578731548-c64695cc6952");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero h1{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:20px;
+    margin-bottom:25px;
+}
+
+.btn{
+    background:#38bdf8;
+    color:black;
+    text-decoration:none;
+    padding:14px 30px;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:white;
+    transform:scale(1.05);
+}
+
+/* SECTION */
+
+.section{
+    padding:70px 50px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:35px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#020617;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    text-decoration:none;
+    color:white;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #38bdf8;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+/* STATS */
+
+.stats{
+    background:#020617;
+}
+
+.stat-box{
+    text-align:center;
+    padding:20px;
+}
+
+.stat-box h2{
+    color:#38bdf8;
+    font-size:40px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#020617;
+    text-align:center;
+    padding:25px;
+}
+
+/* ANIMATION */
+
+.hidden{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* TOP BUTTON */
+
+#topBtn{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#38bdf8;
+    color:black;
+    border:none;
+    padding:12px 15px;
+    border-radius:50%;
+    cursor:pointer;
+    display:none;
+    font-size:18px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    header{
+        padding:20px;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    nav{
+        display:none;
+        position:absolute;
+        top:75px;
+        left:0;
+        width:100%;
+        background:#020617;
+        flex-direction:column;
+        text-align:center;
+        padding:20px 0;
+    }
+
+    nav.active{
+        display:flex;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .section{
+        padding:50px 20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">Fixify</div>
+
+    <div class="menu-btn" id="menuBtn">
+        ☰
+    </div>
+
+    <nav id="navbar">
+        <a href="service.html">Services</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="about.html">About Us</a>
+    </nav>
+
+</header>
+
+<section class="hero">
+
+    <h1 id="typing"></h1>
+
+    <p>
+        Plumber, Electrician & Carpenter Services
+        All In One Platform
+    </p>
+
+    <a href="register.html" class="btn">
+        Get Started
+    </a>
+
+</section>
+
+<section class="section">
+
+    <h2 class="section-title">
+        Our Services
+    </h2>
+
+    <div class="cards">
+
+        <a href="plumber.html" class="card reveal">
+            <h3>🔧 Plumber</h3>
+            <p>Professional plumbing services for homes and offices.</p>
+        </a>
+
+        <a href="electrician.html" class="card reveal">
+            <h3>⚡ Electrician</h3>
+            <p>Certified electricians for all electrical work.</p>
+        </a>
+
+        <a href="carpenter.html" class="card reveal">
+            <h3>🪚 Carpenter</h3>
+            <p>Furniture repair and custom woodwork solutions.</p>
+        </a>
+
+    </div>
+
+</section>
+
+<section class="section stats">
+
+    <h2 class="section-title">
+        Our Achievements
+    </h2>
+
+    <div class="cards">
+
+        <div class="stat-box reveal">
+            <h2>500+</h2>
+            <p>Happy Customers</p>
+        </div>
+
+        <div class="stat-box reveal">
+            <h2>150+</h2>
+            <p>Expert Workers</p>
+        </div>
+
+        <div class="stat-box reveal">
+            <h2>24/7</h2>
+            <p>Support Available</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2 class="section-title">
+        Why Choose Fixify?
+    </h2>
+
+    <div class="cards">
+
+        <div class="card reveal">
+            Expert Technicians
+        </div>
+
+        <div class="card reveal">
+            Fast Service Booking
+        </div>
+
+        <div class="card reveal">
+            Trusted & Reliable
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 Fixify | All Rights Reserved</p>
+</footer>
+
+<button id="topBtn">↑</button>
+
+<script>
+
+/* MOBILE MENU */
+
+const menuBtn = document.getElementById("menuBtn");
+const navbar = document.getElementById("navbar");
+
+menuBtn.onclick = () => {
+    navbar.classList.toggle("active");
+};
+
+/* TYPING EFFECT */
+
+const text = "Welcome To Fixify";
+let i = 0;
+
+function typingEffect(){
+
+    if(i < text.length){
+
+        document.getElementById("typing").innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typingEffect,100);
+    }
+}
+
+typingEffect();
+
+/* SCROLL ANIMATION */
+
+const reveals = document.querySelectorAll(".reveal");
+
+function revealElements(){
+
+    reveals.forEach(item=>{
+
+        const top = item.getBoundingClientRect().top;
+
+        if(top < window.innerHeight - 100){
+            item.classList.add("show");
+        }
+
+    });
+
+}
+
+reveals.forEach(item=>{
+    item.classList.add("hidden");
+});
+
+window.addEventListener("scroll", revealElements);
+revealElements();
+
+/* TOP BUTTON */
+
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY > 300){
+        topBtn.style.display = "block";
+    }
+    else{
+        topBtn.style.display = "none";
+    }
+
+});
+
+topBtn.onclick = ()=>{
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+};
+
+</script>
+
+</body>
+</html>

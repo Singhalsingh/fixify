@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixify Services</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+}
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 50px;
+    background:rgba(2,6,23,.95);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#0ea5e9;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#0ea5e9;
+}
+
+.menu-btn{
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
+.hero{
+    min-height:60vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url('https://images.unsplash.com/photo-1581578731548-c64695cc6952');
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero h1{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#cbd5e1;
+    font-size:18px;
+}
+.search-box{
+    text-align:center;
+    margin:40px 20px;
+}
+
+.search-box input{
+    width:90%;
+    max-width:500px;
+    padding:15px 20px;
+    border:none;
+    border-radius:30px;
+    outline:none;
+    font-size:16px;
+}
+.services-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    padding:20px 50px 60px;
+}
+
+.card{
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #0ea5e9;
+}
+
+.card i{
+    font-size:50px;
+    color:#22c55e;
+    margin-bottom:15px;
+}
+
+.card h2{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#cbd5e1;
+    margin-bottom:15px;
+}
+
+.rating{
+    color:gold;
+    margin-bottom:15px;
+}
+
+.book-btn{
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(45deg,#22c55e,#4ade80);
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.book-btn:hover{
+    transform:scale(1.05);
+}
+footer{
+    text-align:center;
+    padding:25px;
+    background:#020617;
+    margin-top:20px;
+}
+
+.hidden{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+#topBtn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#0ea5e9;
+    color:white;
+    border:none;
+    padding:12px 15px;
+    border-radius:50%;
+    cursor:pointer;
+    display:none;
+    font-size:18px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .header{
+        padding:18px 20px;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    nav{
+        display:none;
+        position:absolute;
+        top:75px;
+        left:0;
+        width:100%;
+        background:#020617;
+        flex-direction:column;
+        text-align:center;
+        padding:20px 0;
+    }
+
+    nav.active{
+        display:flex;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .services-container{
+        padding:20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">FIXIFY</div>
+
+    <div class="menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav id="navbar">
+        <a href="project2.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="about.html">About Us</a>
+    </nav>
+
+</header>
+
+<section class="hero">
+    <h1>Find Trusted Services Near You</h1>
+    <p>Plumber, Electrician & Carpenter – All In One Platform</p>
+</section>
+
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search Services...">
+</div>
+
+<section class="services-container">
+
+    <div class="card service-card">
+        <i class="fas fa-wrench"></i>
+        <h2>Plumber</h2>
+        <p>Fix pipes, leakage and bathroom issues.</p>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <button class="book-btn">Book Now</button>
+    </div>
+
+    <div class="card service-card">
+        <i class="fas fa-bolt"></i>
+        <h2>Electrician</h2>
+        <p>Wiring, fan, lights and electrical repairs.</p>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <button class="book-btn">Book Now</button>
+    </div>
+
+    <div class="card service-card">
+        <i class="fas fa-hammer"></i>
+        <h2>Carpenter</h2>
+        <p>Furniture repair and custom wood work.</p>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <button class="book-btn">Book Now</button>
+    </div>
+
+</section>
+
+<button id="topBtn">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<footer>
+    <p>© 2026 Fixify | All Rights Reserved</p>
+</footer>
+</body>
+<script>
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+const menuBtn = document.getElementById("menuBtn");
+const navbar = document.getElementById("navbar");
+
+menuBtn.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+});
+
+/* =========================
+   SEARCH SERVICES
+========================= */
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", () => {
+
+    let value = searchInput.value.toLowerCase();
+
+    document.querySelectorAll(".service-card").forEach(card => {
+
+        let text = card.innerText.toLowerCase();
+
+        if(text.includes(value)){
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+});
+
+/* =========================
+   SCROLL REVEAL ANIMATION
+========================= */
+
+const cards = document.querySelectorAll(".service-card");
+
+cards.forEach(card => {
+    card.classList.add("hidden");
+});
+
+function revealCards(){
+
+    cards.forEach(card => {
+
+        const cardTop = card.getBoundingClientRect().top;
+
+        if(cardTop < window.innerHeight - 100){
+            card.classList.add("show");
+        }
+
+    });
+
+}
+
+window.addEventListener("scroll", revealCards);
+revealCards();
+
+/* =========================
+   BACK TO TOP BUTTON
+========================= */
+
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", () => {
+
+    if(window.scrollY > 300){
+        topBtn.style.display = "block";
+    } else {
+        topBtn.style.display = "none";
+    }
+
+});
+
+topBtn.addEventListener("click", () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+});
+
+/* =========================
+   BOOK NOW BUTTON
+========================= */
+
+const bookButtons = document.querySelectorAll(".book-btn");
+
+bookButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const serviceName =
+        button.parentElement.querySelector("h2").innerText;
+
+        alert("Booking " + serviceName + " Service");
+
+        window.location.href =
+        "booking.html?service=" + encodeURIComponent(serviceName);
+
+    });
+
+});
+
+/* =========================
+   HERO TEXT ANIMATION
+========================= */
+
+const heroTitle = document.querySelector(".hero h1");
+
+const originalText = heroTitle.innerText;
+
+heroTitle.innerText = "";
+
+let i = 0;
+
+function typeWriter(){
+
+    if(i < originalText.length){
+
+        heroTitle.innerHTML += originalText.charAt(i);
+
+        i++;
+
+        setTimeout(typeWriter, 70);
+
+    }
+
+}
+
+typeWriter();
+
+</script>
+</html>

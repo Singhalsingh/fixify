@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard - Fixify</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  display: flex;
+  background: #0f172a;
+  color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: #020617;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: #4f46e5;
+  margin-bottom: 30px;
+}
+
+.sidebar a {
+  display: block;
+  color: #cbd5f5;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.sidebar a:hover {
+  color: #22c55e;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 20px;
+  color: #22c55e;
+}
+
+/* TABLE */
+.table {
+  margin-top: 30px;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+}
+
+th {
+  color: #94a3b8;
+  text-align: left;
+}
+
+tr {
+  border-bottom: 1px solid #334155;
+}
+
+/* STATUS COLORS */
+.pending { color: orange; }
+.done { color: #22c55e; }
+
+/* BUTTON */
+.btn {
+  padding: 8px 12px;
+  background: #22c55e;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout {
+  margin-top: 20px;
+  display: block;
+  color: red;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>Fixify</h2>
+  <a href="#">Dashboard</a>
+  <a href="#">My Bookings</a>
+  <a href="#">Profile</a>
+  <a href="project2.html">Back to Home</a>
+  <a href="#" class="logout">Logout</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="header">
+    <h1>Welcome, User 👋</h1>
+  </div>
+
+  <!-- STATS -->
+  <div class="cards">
+    <div class="card">
+      <h3>Total Bookings</h3>
+      <p>5</p>
+    </div>
+
+    <div class="card">
+      <h3>Pending Services</h3>
+      <p>2</p>
+    </div>
+
+    <div class="card">
+      <h3>Completed</h3>
+      <p>3</p>
+    </div>
+  </div>
+
+  <!-- BOOKINGS TABLE -->
+  <div class="table">
+    <h3>My Bookings</h3>
+
+    <table>
+      <tr>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+
+      <tr>
+        <td>Plumbing</td>
+        <td>12 June</td>
+        <td class="pending">Pending</td>
+        <td><button class="btn">View</button></td>
+      </tr>
+
+      <tr>
+        <td>Electrician</td>
+        <td>10 June</td>
+        <td class="done">Completed</td>
+        <td><button class="btn">View</button></td>
+      </tr>
+
+      <tr>
+        <td>Carpenter</td>
+        <td>8 June</td>
+        <td class="done">Completed</td>
+        <td><button class="btn">View</button></td>
+      </tr>
+
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
