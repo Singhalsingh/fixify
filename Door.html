@@ -1,126 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Door Design - Fixify</title>
+
+<title>Fixify | Door Design</title>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-  margin: 0;
-  background-color: #0f172a;
-  font-family: Arial, sans-serif;
-  color: white;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
-/* HERO SECTION */
-.hero {
-  height: 70vh;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-   url('https://images.unsplash.com/photo-1582582494700-0c0f9e8f6e5f') center/cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  text-align: center;
-
-  /* Animation */
-  animation: fadeIn 1.5s ease;
+html{
+scroll-behavior:smooth;
 }
 
-/* SECTION */
-.container {
-  padding: 50px 20px;
-  text-align: center;
-  animation: fadeUp 1.5s ease;
+body{
+background:#0f172a;
+color:white;
 }
 
-/* SERVICES BOX */
-.services {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+/* NAV */
+
+nav{
+
+background:#020617;
+
+padding:18px 40px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
 }
 
-.box {
-  width: 250px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #f5f5f5;
-  color: black;
-  transition: 0.3s;
+.logo{
 
-  animation: zoomIn 1s ease;
+font-size:28px;
+
+font-weight:bold;
+
+color:#38bdf8;
+
 }
 
-.box:hover {
-  transform: translateY(-10px) scale(1.05);
+.menu{
+
+display:flex;
+
+gap:20px;
+
+}
+
+.menu a{
+
+color:white;
+
+text-decoration:none;
+
+}
+
+.menu a:hover{
+
+color:#22c55e;
+
+}
+
+.menu-btn{
+
+display:none;
+
+font-size:30px;
+
+cursor:pointer;
+
+}
+
+/* HERO */
+
+.hero{
+
+height:70vh;
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.55),
+rgba(0,0,0,.55)
+),
+
+url("https://images.unsplash.com/photo-1582582494700-0c0f9e8f6e5f")
+center/cover;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.hero h1{
+font-size:52px;
+}
+
+.hero p{
+margin-top:10px;
+color:#cbd5e1;
+}
+
+/* SEARCH */
+
+.search{
+
+padding:35px;
+
+text-align:center;
+
+}
+
+.search input{
+
+width:90%;
+
+max-width:520px;
+
+padding:15px;
+
+border:none;
+
+border-radius:30px;
+
+}
+.icon{
+    font-size:45px;
+    margin-bottom:15px;
+    color:#38bdf8;
+}
+
+/* CONTENT */
+
+.container{
+
+padding:60px 25px;
+
+text-align:center;
+
+}
+
+.services{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(230px,1fr));
+
+gap:25px;
+
+margin-top:40px;
+
+}
+
+.box{
+
+background:#020617;
+
+padding:30px;
+
+border-radius:18px;
+
+transition:.4s;
+
+}
+
+.box:hover{
+
+transform:
+translateY(-10px);
+
+box-shadow:
+0 0 18px #38bdf8;
+
+}
+
+.icon{
+
+font-size:45px;
+
+}
+
+.price{
+
+display:block;
+
+margin-top:15px;
+
+font-size:22px;
+
+color:#22c55e;
+
 }
 
 /* BUTTON */
-.btn {
-  margin-top: 20px;
-  padding: 12px 25px;
-  background: rgb(9, 224, 17);
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+
+.btn{
+
+margin-top:40px;
+
+padding:15px 40px;
+
+background:#16a34a;
+
+border:none;
+
+border-radius:40px;
+
+color:white;
+
+font-size:18px;
+
+cursor:pointer;
+
 }
 
-.btn:hover {
-  transform: scale(1.05);
-  background: rgb(7, 180, 14);
+.btn:hover{
+
+transform:scale(1.05);
+
 }
-nav {
-  background: #020617;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+/* STATS */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+padding:50px;
+
 }
-nav a {
-  color: rgb(230, 226, 239);
-  text-decoration: none;
-  margin-left: 15px;
-  transition: 0.3s;
+
+.stat{
+
+background:#020617;
+
+padding:25px;
+
+border-radius:15px;
+
+}
+
+.stat h2{
+color:#38bdf8;
+}
+
+/* TOP */
+
+#topBtn{
+
+position:fixed;
+
+bottom:20px;
+
+right:20px;
+
+display:none;
+
+padding:14px;
+
+border:none;
+
+border-radius:50%;
+
+background:#38bdf8;
+
+cursor:pointer;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.menu-btn{
+display:block;
+}
+
+.menu{
+
+display:none;
+
+position:absolute;
+
+top:70px;
+
+left:0;
+
+width:100%;
+
+background:#020617;
+
+flex-direction:column;
+
+padding:20px;
+
+text-align:center;
+
+}
+
+.menu.active{
+display:flex;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+nav{
+padding:18px;
+}
+
 }
 
 /* FOOTER */
-.footer {
-  background: #080325;
-  padding: 20px;
-  text-align: center;
-}
 
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+footer{
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+background:#020617;
 
-@keyframes zoomIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+padding:20px;
+
+text-align:center;
+
 }
 
 </style>
@@ -128,53 +363,255 @@ nav a {
 </head>
 
 <body>
-    <nav>
-  <h2>Fixify</h2>
-  <div>
-    <a href="project2.html">Home</a>
-    <a href="service.html">Services</a>
-  </div>
+
+<nav>
+
+<div class="logo">
+
+FIXIFY
+
+</div>
+
+<div
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</div>
+
+<div
+class="menu"
+id="menu">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="service.html">
+Services
+</a>
+
+</div>
+
 </nav>
 
-<div class="hero">
-  Door Design 🚪
+<section class="hero">
+
+
+<h1>
+    <i class="fa-solid fa-door-open"></i>
+    Door Services
+</h1>
+<p>
+
+Modern • Strong • Elegant
+
+</p>
+
+</section>
+
+<div class="search">
+
+<input
+id="search"
+placeholder="Search door service...">
+
 </div>
 
-<div class="container">
-  <h2>Modern Door Design Services</h2>
-  <p>We create stylish and functional door solutions with modern designs and high-quality materials.</p>
+<section class="container">
+
+<h2>
+
+Modern Door Design Services
+
+</h2>
+
+<p>
+
+Premium quality doors with modern finish.
+
+</p>
+
+<div class="services">
+
+<div class="box service">
+
+<div class="icon">
+    <i class="fa-solid fa-door-open"></i>
 </div>
 
-<div class="container">
-  <h2>Our Services Include</h2>
+Custom Door Design
 
-  <div class="services">
-    <div class="box">
-        Custom Door Design
-    <br><span class="price">₹500</span>
-  </div>
+<span class="price">
+₹500
+</span>
 
-  <div class="box">
-     Door Installation
-    <br><span class="price">₹500</span>
-  </div>
-
-  <div class="box">
-    Door Repair<br>
-    <br><span class="price">₹500</span>
-  </div>
-
-  <div class="box">
-    Custom Kitchen Design<br>
-    <br><span class="price">₹550</span>
-  </div>
-</div>
-  <button class="btn" onclick="window.location.href='booking.html'">Book Design Now</button>
 </div>
 
-<div class="footer">
-  © 2026 Fixify | All Rights Reserved
+<div class="box service">
+
+<div class="icon">
+    <i class="fa-solid fa-door-open"></i>
 </div>
+
+Door Installation
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+
+<div class="icon">
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+</div>
+
+Door Repair
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+
+        <div class="icon">
+        <i class="fa-solid fa-gem"></i>
+        </div>
+
+Premium Door Customization
+
+<span class="price">
+₹550
+</span>
+
+</div>
+
+</div>
+
+<button
+
+class="btn"
+
+onclick="window.location.href='booking.html?service=Door Design'">
+
+Book Design Now
+
+</button>
+
+<button class="btn" onclick="window.location.href='enquiry.html'">Enquire</button>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<h2>3200+</h2>
+<p>Projects</p>
+</div>
+
+<div class="stat">
+<h2>99%</h2>
+<p>Happy Clients</p>
+</div>
+
+<div class="stat">
+<h2>24/7</h2>
+<p>Support</p>
+</div>
+
+</section>
+
+<button id="topBtn">
+↑
+</button>
+
+<footer>
+
+© 2026 Fixify | All Rights Reserved
+
+</footer>
+
+<script>
+
+menuBtn.onclick=()=>{
+
+menu.classList.toggle("active");
+
+};
+
+search.addEventListener(
+
+"keyup",
+
+()=>{
+
+let value=
+search.value.toLowerCase();
+
+document
+.querySelectorAll(".service")
+
+.forEach(
+
+box=>{
+
+box.style.display=
+
+box.innerText
+.toLowerCase()
+.includes(value)
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
+
+});
+
+window.addEventListener(
+
+"scroll",
+
+()=>{
+
+topBtn.style.display=
+
+window.scrollY>300
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
+
+topBtn.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+</script>
 
 </body>
+
 </html>

@@ -1,170 +1,568 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Furniture Polishing - Fixify</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  background-color: #0f172a;
-  font-family: Arial, sans-serif;
-  color: white;
-}
+    <title>Furniture Polishing - Fixify</title>
 
-/* HERO SECTION */
-.hero {
-  height: 70vh;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-   url('https://images.unsplash.com/photo-1582582494700-0c0f9e8f6e5f') center/cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  text-align: center;
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  /* Animation */
-  animation: fadeIn 1.5s ease;
-}
+    <style>
 
-/* SECTION */
-.container {
-  padding: 50px 20px;
-  text-align: center;
-  animation: fadeUp 1.5s ease;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-/* SERVICES BOX */
-.services {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
+        body {
+            background: #0f172a;
+            color: white;
+        }
 
-.box {
-  width: 250px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #f5f5f5;
-  color: black;
-  transition: 0.3s;
+        /* NAVBAR */
 
-  animation: zoomIn 1s ease;
-}
+        nav {
+            background: rgba(2, 6, 23, .95);
+            backdrop-filter: blur(10px);
+            padding: 16px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
 
-.box:hover {
-  transform: translateY(-10px) scale(1.05);
-}
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #22c55e;
+        }
 
-/* BUTTON */
-.btn {
-  margin-top: 20px;
-  padding: 12px 25px;
-  background: rgb(9, 224, 17);
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        .links {
+            display: flex;
+            gap: 25px;
+        }
 
-.btn:hover {
-  transform: scale(1.05);
-  background: rgb(7, 180, 14);
-}
-nav {
-  background: #020617;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-nav a {
-  color: rgb(230, 226, 239);
-  text-decoration: none;
-  margin-left: 15px;
-  transition: 0.3s;
-}
+        .links a {
+            color: white;
+            text-decoration: none;
+            transition: .3s;
+        }
 
-/* FOOTER */
-.footer {
-  background: #080325;
-  padding: 20px;
-  text-align: center;
-}
+        .links a:hover {
+            color: #22c55e;
+        }
 
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+        .menu {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+        /* HERO */
 
-@keyframes zoomIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+        .hero {
+            height: 75vh;
 
-</style>
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, .55),
+                    rgba(0, 0, 0, .55)
+                ),
+                url('https://images.unsplash.com/photo-1582582494700-0c0f9e8f6e5f')
+                center/cover;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            animation: fade 1.2s;
+        }
+
+        .hero h1 i {
+            color: #38bdf8;
+            margin-right: 8px;
+        }
+
+        .hero p {
+            margin-top: 15px;
+            color: #dbeafe;
+            font-size: 18px;
+        }
+
+        .hero button {
+            margin-top: 30px;
+            padding: 14px 34px;
+            border: none;
+            border-radius: 40px;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #22c55e,
+                    #16a34a
+                );
+
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .hero button:hover {
+            transform: scale(1.08);
+        }
+
+        /* SECTION */
+
+        .section {
+            padding: 70px 8%;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .section > p {
+            color: #cbd5e1;
+        }
+
+        /* SERVICE */
+
+        .services {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
+
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: #000;
+
+            padding: 30px;
+            border-radius: 18px;
+
+            transition: .4s;
+
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+
+            box-shadow:
+                0 0 30px
+                rgba(34, 197, 94, .25);
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #38bdf8;
+        }
+
+        .card h3 {
+            color: white;
+            margin-top: 5px;
+        }
+
+        .price {
+            display: inline-block;
+
+            margin-top: 15px;
+            padding: 8px 20px;
+
+            background: #22c55e;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+            color: white;
+        }
+
+        /* BUTTONS */
+
+        .button-group {
+            margin-top: 50px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .book,
+        .btn {
+            padding: 14px 32px;
+
+            border: none;
+            border-radius: 50px;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #22c55e,
+                    #16a34a
+                );
+
+            color: white;
+
+            cursor: pointer;
+            font-size: 16px;
+
+            transition: .3s;
+        }
+
+        .book:hover,
+        .btn:hover {
+            transform: scale(1.07);
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 70px;
+            padding: 25px;
+
+            background: #020617;
+
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            .menu {
+                display: block;
+            }
+
+            .links {
+                display: none;
+
+                position: absolute;
+
+                top: 72px;
+                left: 0;
+
+                width: 100%;
+
+                background: #020617;
+
+                flex-direction: column;
+
+                padding: 20px;
+            }
+
+            .links.show {
+                display: flex;
+            }
+
+            .hero {
+                height: 65vh;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .book,
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        /* ANIMATION */
+
+        @keyframes fade {
+
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 <body>
+
+    <!-- NAVBAR -->
+
     <nav>
-  <h2>Fixify</h2>
-  <div>
-    <a href="project2.html">Home</a>
-    <a href="service.html">Services</a>
-  </div>
-</nav>
 
-<div class="hero">
-  Furniture Polishing 🪑
-</div>
+        <div class="logo">
+            Fixify
+        </div>
 
-<div class="container">
-  <h2>Modern Furniture Polishing Services</h2>
-  <p>We provide expert furniture polishing services to restore the beauty and longevity of your wooden furniture.</p>
-</div>
+        <div class="menu">
+            ☰
+        </div>
 
-<div class="container">
-  <h2>Our Services Include</h2>
+        <div class="links">
 
-  <div class="services">
-    <div class="box">
-        Custom Furniture Polishing
-    <br><span class="price">₹500</span>
-  </div>
+            <a href="index.html">
+                Home
+            </a>
 
-  <div class="box">
-        polishing
-    <br><span class="price">₹500</span>
-  </div>
-</div>
-  <button class="btn" onclick="window.location.href='booking.html'">Book Design Now</button>
-</div>
+            <a href="service.html">
+                Services
+            </a>
 
-<div class="footer">
-  © 2026 Fixify | All Rights Reserved
-</div>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1>
+            <i class="fa-solid fa-spray-can-sparkles"></i>
+            Furniture Polishing
+        </h1>
+
+        <p>
+            Restore Shine • Premium Finish • Long Lasting
+        </p>
+
+        <button onclick="goBook()">
+            Book Service
+        </button>
+
+    </section>
+
+
+    <!-- CONTENT -->
+
+    <section class="section">
+
+        <h2>
+            Modern Furniture Polishing
+        </h2>
+
+        <p>
+            Professional polishing services to restore beauty
+            and extend furniture life.
+        </p>
+
+
+        <!-- SERVICES -->
+
+        <div class="services">
+
+            <!-- CARD 1 -->
+
+            <div class="card">
+
+                <div class="icon">
+                    <i class="fa-solid fa-brush"></i>
+                </div>
+
+                <h3>
+                    Custom Furniture Polishing
+                </h3>
+
+                <span class="price">
+                    ₹500
+                </span>
+
+            </div>
+
+
+            <!-- CARD 2 -->
+
+            <div class="card">
+
+                <div class="icon">
+                    <i class="fa-solid fa-spray-can-sparkles"></i>
+                </div>
+
+                <h3>
+                    Premium Wood Polishing
+                </h3>
+
+                <span class="price">
+                    ₹500
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="button-group">
+
+            <button
+                class="book"
+                onclick="goBook()">
+
+                Book Design Now
+
+            </button>
+
+
+            <button
+                class="btn"
+                onclick="goEnquiry()">
+
+                Enquire
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Fixify |
+        All Rights Reserved
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        /* MOBILE MENU */
+
+        document
+            .querySelector(".menu")
+            .onclick = () => {
+
+                document
+                    .querySelector(".links")
+                    .classList
+                    .toggle("show");
+
+            };
+
+
+        /* BOOKING */
+
+        function goBook() {
+
+            window.location.href =
+                "booking.html?service=Furniture%20Polishing";
+
+        }
+
+
+        /* ENQUIRY */
+
+        function goEnquiry() {
+
+            window.location.href =
+                "enquiry.html";
+
+        }
+
+
+        /* CARD ANIMATION */
+
+        const cards =
+            document.querySelectorAll(".card");
+
+
+        const observer =
+            new IntersectionObserver(
+
+                (entries) => {
+
+                    entries.forEach(
+
+                        (entry) => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target
+                                    .classList
+                                    .add("show");
+
+                            }
+
+                        }
+
+                    );
+
+                }
+
+            );
+
+
+        cards.forEach(
+
+            (card) => {
+
+                observer.observe(card);
+
+            }
+
+        );
+
+    </script>
 
 </body>
+
 </html>

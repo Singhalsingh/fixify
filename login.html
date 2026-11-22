@@ -2,417 +2,560 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Fixify | Login</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI';
-}
-
-body{
-
-min-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-padding:20px;
-
-background:
-linear-gradient(
-135deg,
-#020617,
-#0f172a
-);
-
-color:white;
-
-}
-
-.container{
-
-width:100%;
-
-max-width:420px;
-
-background:
-rgba(255,255,255,.06);
-
-backdrop-filter:
-blur(14px);
-
-padding:35px;
-
-border-radius:20px;
-
-border:
-1px solid
-rgba(255,255,255,.08);
-
-}
-
-.logo{
-
-text-align:center;
-
-font-size:30px;
-
-font-weight:bold;
-
-color:#38bdf8;
-
-margin-bottom:15px;
-
-}
-
-.title{
-
-text-align:center;
-
-margin-bottom:25px;
-
-}
-
-.input{
-
-margin-bottom:16px;
-
-position:relative;
-
-}
-
-.input input{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:10px;
-
-outline:none;
-
-background:
-rgba(255,255,255,.08);
-
-color:white;
-
-}
-
-.input input::placeholder{
-
-color:#cbd5e1;
-
-}
-
-.eye{
-
-position:absolute;
-
-right:15px;
-
-top:14px;
-
-cursor:pointer;
-
-}
-
-.row{
-
-display:flex;
-
-justify-content:space-between;
-
-font-size:14px;
-
-margin-bottom:20px;
-
-}
-
-.row a{
-
-color:#4ade80;
-
-text-decoration:none;
-
-}
-
-button{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-background:
-linear-gradient(
-45deg,
-#22c55e,
-#4ade80
-);
-
-color:white;
-
-font-size:16px;
-
-}
-
-button:hover{
-
-transform:scale(1.02);
-
-}
-
-.success{
-
-display:none;
-
-margin-top:15px;
-
-padding:12px;
-
-background:#22c55e;
-
-border-radius:10px;
-
-text-align:center;
-
-}
-
-.bottom{
-
-text-align:center;
-
-margin-top:18px;
-
-}
-
-.bottom a{
-
-color:#4ade80;
-
-text-decoration:none;
-
-}
-
-@media(max-width:768px){
-
-.container{
-padding:25px;
-}
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fixify | Login</title>
+
+    <!-- Google Sign-In Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #020617, #0f172a);
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, .06);
+            backdrop-filter: blur(14px);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .input {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .input input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            background: rgba(255, 255, 255, .08);
+            color: white;
+        }
+
+        .input input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .eye {
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .row a,
+        .bottom a {
+            color: #4ade80;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #22c55e, #4ade80);
+            color: white;
+            font-size: 16px;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .google-btn-container {
+            display: flex;
+            justify-content: center;
+            min-height: 45px;
+        }
+
+        .bottom {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        .error {
+            display: block;
+            background: #991b1b;
+        }
+
+        .success {
+            display: block;
+            background: #166534;
+        }
+
+        @media(max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-<div class="logo">
+        <div class="logo">FIXIFY</div>
 
-FIXIFY
+        <h2 class="title">Welcome Back</h2>
 
-</div>
+        <!-- Normal Login Form -->
 
-<h2 class="title">
+        <form id="loginForm">
 
-Welcome Back 👋
+            <div class="input">
 
-</h2>
+                <input
+                    id="user"
+                    type="email"
+                    placeholder="Email"
+                    required>
 
-<form id="loginForm">
+            </div>
 
-<div class="input">
+            <div class="input">
 
-<input
-id="user"
+                <input
+                    id="pass"
+                    type="password"
+                    placeholder="Password (6-8 characters)"
+                    minlength="6"
+                    maxlength="8"
+                    required>
 
-placeholder="Username / Email"
+                <span class="eye" onclick="togglePass()">👁</span>
 
-required>
+            </div>
 
-</div>
+            <div class="row">
 
-<div class="input">
+                <label>
+                    <input type="checkbox" id="rememberMe">
+                    Remember Me
+                </label>
 
-<input
-id="pass"
+                <a href="forgot-password.html">Forgot Password?</a>
 
-type="password"
+            </div>
 
-placeholder="Password"
+            <button
+                type="submit"
+                class="login-btn"
+                id="btn">
 
-required>
+                Login
 
-<span
-class="eye"
+            </button>
 
-onclick="togglePass()">
+        </form>
 
-👁
+        <div class="message" id="message"></div>
 
-</span>
+        <div class="or-divider">OR</div>
 
-</div>
+        <!-- Google Login -->
 
-<div class="row">
+        <div class="google-btn-container">
 
-<label>
+            <div
+                id="g_id_onload"
+                data-client_id="878486367421-8669019j001b16b0u4vqq4rdo46c5h8g.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-callback="handleCredentialResponse"
+                data-auto_prompt="false">
+            </div>
 
-<input type="checkbox">
+            <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left">
+            </div>
 
-Remember Me
+        </div>
 
-</label>
+        <div class="bottom">
 
-<a href="#">
+            Don't have account?
 
-Forgot Password?
+            <a href="register.html">Register</a>
 
-</a>
+        </div>
 
-</div>
+    </div>
 
-<button id="btn">
 
-Login
+    <script>
 
-</button>
+        // Backend URL
 
-<div
-class="success"
+        const API_URL = "https://fixify-backend-eq17.onrender.com";
 
-id="success">
 
-✅ Login Successful
+        // Password Show / Hide
 
-</div>
+        function togglePass() {
 
-</form>
+            const pass = document.getElementById("pass");
 
-<div class="bottom">
+            pass.type =
+                pass.type === "password"
+                    ? "text"
+                    : "password";
 
-Don't have account?
+        }
 
-<a href="register.html">
 
-Register
+        // Message Function
 
-</a>
+        function showMessage(text, type) {
 
-</div>
+            const message = document.getElementById("message");
 
-</div>
+            message.textContent = text;
 
-<script>
+            message.className = "message " + type;
 
-/* SHOW PASSWORD */
+        }
 
-function togglePass(){
 
-const pass=
-document
-.getElementById(
-"pass"
-);
+        // Save Login Data
 
-pass.type=
+        function saveLoginData(data) {
 
-pass.type==="password"
+            if (!data.token || !data.user) {
 
-?
+                throw new Error(
+                    "Login successful, but authentication data was not received."
+                );
 
-"text"
+            }
 
-:
+            // Save JWT Token
 
-"password";
+            localStorage.setItem("token", data.token);
 
-}
+            // Save User Details
 
-/* LOGIN */
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
 
-loginForm
-.addEventListener(
+        }
 
-"submit",
 
-e=>{
+        // API Response Handler
 
-e.preventDefault();
+        async function getResponseData(response) {
 
-if(
+            const contentType =
+                response.headers.get("content-type") || "";
 
-user.value.length<3
+            if (!contentType.includes("application/json")) {
 
-){
+                throw new Error(
+                    "Server returned an invalid response. Please try again."
+                );
 
-alert(
-"Enter valid username"
-);
+            }
 
-return;
+            const data = await response.json();
 
-}
+            if (!response.ok || !data.success) {
 
-if(
+                throw new Error(
+                    data.message || "Authentication failed."
+                );
 
-pass.value.length<6
+            }
 
-){
+            return data;
 
-alert(
-"Password too short"
-);
+        }
 
-return;
 
-}
+        // NORMAL EMAIL LOGIN
 
-btn.innerHTML=
-"Logging in...";
+        document.getElementById("loginForm").addEventListener(
 
-setTimeout(()=>{
+            "submit",
 
-success.style.display=
-"block";
+            async function(e) {
 
-btn.innerHTML=
-"Success";
+                e.preventDefault();
 
-setTimeout(()=>{
+                const btn = document.getElementById("btn");
 
-window.location.href=
-"dashboard.html";
+                const email =
+                    document.getElementById("user").value.trim();
 
-},1800);
+                const password =
+                    document.getElementById("pass").value;
 
-},1500);
 
-});
+                if (password.length < 6 || password.length > 8) {
 
-</script>
+                    showMessage(
+                        "Password must be 6-8 characters long.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    btn.disabled = true;
+
+                    btn.innerText = "Logging in...";
+
+                    showMessage(
+                        "Verifying your account...",
+                        "success"
+                    );
+
+
+                    const response = await fetch(
+
+                        `${API_URL}/api/users/login`,
+
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                email: email,
+
+                                password: password
+
+                            })
+
+                        }
+
+                    );
+
+
+                    const data = await getResponseData(response);
+
+
+                    console.log(
+                        "Login Successful:",
+                        data
+                    );
+
+
+                    // SAVE TOKEN AND USER
+
+                    saveLoginData(data);
+
+
+                    showMessage(
+                        "Login Successful!",
+                        "success"
+                    );
+
+
+                    setTimeout(function() {
+
+                        window.location.href = "./dashboard.html";
+
+                    }, 1000);
+
+
+                }
+
+                catch(error) {
+
+                    console.error(
+                        "Normal Login Error:",
+                        error
+                    );
+
+                    showMessage(
+                        error.message || "Unable to connect to server.",
+                        "error"
+                    );
+
+                    btn.disabled = false;
+
+                    btn.innerText = "Login";
+
+                }
+
+            }
+
+        );
+
+
+        // GOOGLE LOGIN
+
+        async function handleCredentialResponse(response) {
+
+            try {
+
+                if (!response || !response.credential) {
+
+                    throw new Error(
+                        "Google credential not received."
+                    );
+
+                }
+
+
+                showMessage(
+                    "Verifying Google account...",
+                    "success"
+                );
+
+
+                const result = await fetch(
+
+                    `${API_URL}/api/users/auth/google`,
+
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            credential: response.credential
+
+                        })
+
+                    }
+
+                );
+
+
+                const data = await getResponseData(result);
+
+
+                console.log(
+                    "Google Login Response:",
+                    data
+                );
+
+
+                // SAVE GOOGLE TOKEN AND USER
+
+                saveLoginData(data);
+
+
+                showMessage(
+                    "Google Login Successful!",
+                    "success"
+                );
+
+
+                setTimeout(() => {
+
+                    window.location.href = "./dashboard.html";
+
+                }, 1000);
+
+
+            }
+
+            catch(error) {
+
+                console.error(
+                    "Google Login Error:",
+                    error
+                );
+
+                showMessage(
+                    error.message || "Unable to connect to server.",
+                    "error"
+                );
+
+            }
+
+        }
+
+    </script>
 
 </body>
+
 </html>

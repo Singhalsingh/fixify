@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Fixify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1e2e;
+            color: white;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #111420;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            color: #3b82f6;
+        }
+        .sidebar a {
+            display: block;
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 10px 0;
+        }
+        .sidebar a:hover {
+            color: white;
+        }
+        .main-content {
+            flex: 1;
+            padding: 40px;
+        }
+        .main-content h1 {
+            border-bottom: 2px solid #2d3748;
+            padding-bottom: 10px;
+        }
+        .booking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .booking-table th, .booking-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #2d3748;
+        }
+        .status-pending { color: #f6ad55; }
+        .status-completed { color: #48bb78; }
+        .view-btn {
+            background-color: #48bb78;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Fixify</h2>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="mybookings.html" style="color:white; font-weight:bold;">My Bookings</a>
+        <a href="profile.html">Profile</a>
+        <a href="index.html">Back to Home</a>
+        <a href="login.html">Logout</a>
+    </div>
+    <div class="main-content">
+        <h1>My Bookings</h1>
+        <table class="booking-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Plumbing</td>
+                    <td>12 June</td>
+                    <td class="status-pending">Pending</td>
+                    <td><button class="view-btn">View</button></td>
+                </tr>
+                <tr>
+                    <td>Electrician</td>
+                    <td>10 June</td>
+                    <td class="status-completed">Completed</td>
+                    <td><button class="view-btn">View</button></td>
+                </tr>
+                <tr>
+                    <td>Carpenter</td>
+                    <td>8 June</td>
+                    <td class="status-completed">Completed</td>
+                    <td><button class="view-btn">View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

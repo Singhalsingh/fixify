@@ -313,7 +313,7 @@ FIXIFY
 
 <div class="menu" id="menu">
 
-<a href="project2.html">
+<a href="index.html">
 Home
 </a>
 
@@ -341,82 +341,51 @@ Send Enquiry
 
 <form id="enquiryForm">
 
-<input
-id="name"
-placeholder="Your Name"
-required>
+<input type="text" id="name" placeholder="Your Name" required>
 
-<input
-id="phone"
-type="tel"
-placeholder="Phone Number"
-required>
+<input type="tel" id="phone" placeholder="Phone Number" required>
 
-<select
-id="service"
-required>
+<!-- Added Email Input Field -->
+<input type="email" id="email" placeholder="Your Email" required>
 
-<option value="">
+<select id="service">
+
+<option value="" disabled selected>
+
 Select Service
+
 </option>
 
-<option>
+<option value="plumber">
 Plumber
 </option>
 
-<option>
+<option value="electrician">
 Electrician
 </option>
 
-<option>
+<option value="carpenter">
+
 Carpenter
+
 </option>
 
 </select>
 
-<textarea
+<textarea id="message" placeholder="Describe your problem" maxlength="250" required></textarea>
 
-id="problem"
+<p class="counter">
+0/250
+</p>
 
-rows="4"
+<input type="text" id="address" placeholder="Address" required>
 
-placeholder="Describe your problem"
-
-></textarea>
-
-<div class="counter">
-
-<span id="count">
-
-0
-
-</span>
-
-/150
-
-</div>
-
-<input
-id="address"
-placeholder="Address"
-required>
-
-<input
-type="date"
-required>
-
-<button id="submitBtn">
-
+<button type="submit">
 Submit Enquiry
-
 </button>
 
-<div
-class="success"
-id="success">
-
-✅ Enquiry Submitted
-
+<div class="success" id="success">
+✓ Enquiry Submitted
 </div>
 
 </form>
@@ -425,105 +394,118 @@ id="success">
 
 </div>
 
+<footer>
+© 2024 Fixify
+</footer>
+
 <button id="topBtn">
 ↑
 </button>
 
-<footer>
-
-© 2026 Fixify
-
-</footer>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
 
-/* MENU */
+/* MOBILE MENU */
 
-menuBtn.onclick=()=>{
+const menuBtn = document.getElementById('menuBtn');
 
-menu.classList.toggle("active");
+const menu = document.getElementById('menu');
 
-};
+menuBtn.addEventListener('click',() => {
 
-/* COUNTER */
-
-problem
-.addEventListener(
-
-"input",
-
-()=>{
-
-count.innerHTML=
-
-problem.value.length;
+menu.classList.toggle('active');
 
 });
 
-/* FORM */
+/* TEXTAREA COUNTER */
 
-enquiryForm
-.addEventListener(
+const textarea = document.getElementById('message');
 
-"submit",
+const counter = document.querySelector('.counter');
 
-e=>{
+textarea.addEventListener('input',() => {
+
+const text = textarea.value;
+
+counter.textContent = `${text.length}/250`;
+
+});
+
+/* SCROLL TOP */
+
+const topBtn = document.getElementById('topBtn');
+
+window.addEventListener('scroll',() => {
+
+if(window.scrollY > 300){
+
+topBtn.style.display = 'block';
+
+}else{
+
+topBtn.style.display = 'none';
+
+}
+
+});
+
+topBtn.addEventListener('click',() => {
+
+window.scrollTo(0,0);
+
+});
+
+/* ENQUIRY FORM */
+
+document.getElementById('enquiryForm').addEventListener('submit', function(e) {
 
 e.preventDefault();
 
-submitBtn.innerHTML=
-"Submitting...";
+const name = document.getElementById('name').value;
 
-setTimeout(()=>{
+const phone = document.getElementById('phone').value;
 
-success.style.display=
-"block";
+const email = document.getElementById('email').value; // Get Email Value
 
-submitBtn.innerHTML=
-"Submitted";
+const service = document.getElementById('service').value;
 
-enquiryForm.reset();
+const message = document.getElementById('message').value;
 
-count.innerHTML=
-0;
+const address = document.getElementById('address').value;
 
-},1500);
-
-});
-
-/* TOP */
-
-window.addEventListener(
-
-"scroll",
-
-()=>{
-
-topBtn.style.display=
-
-window.scrollY>300
-
-?
-
-"block"
-
-:
-
-"none";
-
-});
-
-topBtn.onclick=()=>{
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
+const enquiryData = {
+name,
+phone,
+email, // Send Email Data
+service,
+message,
+address
 };
+
+axios.post("https://fixify-backend-eq17.onrender.com/api/users/enquiry", enquiryData)
+
+.then(function(response) {
+
+console.log('Success:', response.data);
+
+document.getElementById('success').style.display = 'block';
+
+document.getElementById('enquiryForm').reset();
+
+counter.textContent = '0/250';
+
+})
+
+.catch(function(error) {
+
+console.error('Error:', error);
+
+alert('Enquiry submit nahi hui');
+
+});
+
+});
 
 </script>
 

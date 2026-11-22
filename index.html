@@ -1,105 +1,1580 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>fixify</title>
-        <style>
-            body{
-                font-family: Arial,sans-serif;
-                background:linear-gradient(to right,#4facfe,#00f2fe);
-                margin:0 ;
-                padding: 0;
-            }
-            .container{
-                width: 400px;
-                margin:50px auto;
-                background:#fff;
-                padding: 25px;
-                border-radius:10px; 
-                box-shadow: 0 0 15px rgba(0,0,0,0,2);
-            }
-            h2{
-                text-align:center;
-                margin-bottom: 20px; 
-            }
-            label{
-                font-weight:bold ;
-                display:block;
-                margin-top:10px;
-            }
-            input,select,textarea{
-                width:100%;
-                padding: 8px;
-                margin-top: 5px;
-                border-radius: 5px;
-                border:1px solid #ccc;
-            }
-            textarea{
-                resize:none;
-            }
-            .gender{
-                display:flex;
-                gap:10px;
-                margin-top:5px;
-            }
-            .gender label{
-                font-weight: normal;
-            }
-            button{
-                width: 100%;
-                margin-top:15px;
-                padding:10px;
-                background:#4facfe;
-                border:none;
-                color: white;
-                font-size:16px;
-                border-radius:5px;
-                cursor: pointer;
-            }
-            button:hover{
-                background:#00c6ff;
-            }
-        </style> 
-    </head>
-</html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fixify - Home Services</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* HEADER */
+
+header{
+    background:#020617;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    color:#38bdf8;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#38bdf8;
+}
+
+.menu-btn{
+    display:none;
+    font-size:30px;
+    cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url("https://images.unsplash.com/photo-1581578731548-c64695cc6952");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero h1{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:20px;
+    margin-bottom:25px;
+}
+
+.btn{
+    background:#38bdf8;
+    color:black;
+    text-decoration:none;
+    padding:14px 30px;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:white;
+    transform:scale(1.05);
+}
+
+/* SECTION */
+
+.section{
+    padding:70px 50px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:35px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#020617;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    text-decoration:none;
+    color:white;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #38bdf8;
+}
+
+.card h3 i{
+    margin-right:8px;
+    color:#38bdf8;
+    font-size:22px;
+}
+
+/* STATS */
+
+.stats{
+    background:#020617;
+}
+
+.stat-box{
+    text-align:center;
+    padding:20px;
+}
+
+.stat-box h2{
+    color:#38bdf8;
+    font-size:40px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#020617;
+    text-align:center;
+    padding:25px;
+}
+
+/* ANIMATION */
+
+.hidden{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* TOP BUTTON */
+
+#topBtn{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#38bdf8;
+    color:black;
+    border:none;
+    padding:12px 15px;
+    border-radius:50%;
+    cursor:pointer;
+    display:none;
+    font-size:18px;
+    z-index:2000;
+}
+
+
+/* =====================================================
+   FIXIFY CHATBOT
+   ONLY CHATBOT CODE - EXISTING WEBSITE UNCHANGED
+   ===================================================== */
+
+/* CHAT BUTTON */
+
+#fixifyChatButton{
+    position:fixed;
+    right:25px;
+    bottom:85px;
+    width:58px;
+    height:58px;
+    border:none;
+    border-radius:50%;
+    background:#38bdf8;
+    color:#020617;
+    font-size:23px;
+    cursor:pointer;
+    box-shadow:0 5px 20px rgba(56,189,248,.35);
+    z-index:3000;
+    transition:.3s;
+}
+
+#fixifyChatButton:hover{
+    transform:scale(1.08);
+}
+
+/* CHAT WINDOW */
+
+#fixifyChat{
+    position:fixed;
+    right:25px;
+    bottom:155px;
+    width:370px;
+    max-width:calc(100vw - 30px);
+    height:520px;
+    background:#020617;
+    border:1px solid #1e293b;
+    border-radius:18px;
+    overflow:hidden;
+    display:none;
+    flex-direction:column;
+    z-index:3000;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+/* CHAT HEADER */
+
+.fixify-chat-header{
+    background:#020617;
+    border-bottom:1px solid #1e293b;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.fixify-chat-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.fixify-chat-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#38bdf8;
+    color:#020617;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.fixify-chat-title h3{
+    font-size:16px;
+}
+
+.fixify-chat-title span{
+    display:block;
+    font-size:11px;
+    color:#38bdf8;
+    margin-top:3px;
+}
+
+#closeFixifyChat{
+    background:none;
+    border:none;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* CHAT BODY */
+
+#fixifyMessages{
+    flex:1;
+    overflow-y:auto;
+    padding:15px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+/* MESSAGE */
+
+.fixify-message{
+    max-width:85%;
+    padding:11px 13px;
+    border-radius:13px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.fixify-bot{
+    align-self:flex-start;
+    background:#0f172a;
+    border:1px solid #1e293b;
+}
+
+.fixify-user{
+    align-self:flex-end;
+    background:#38bdf8;
+    color:#020617;
+}
+
+/* QUICK OPTIONS */
+
+.fixify-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:5px;
+}
+
+.fixify-option{
+    background:#0f172a;
+    color:#38bdf8;
+    border:1px solid #38bdf8;
+    border-radius:20px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:12px;
+    transition:.2s;
+}
+
+.fixify-option:hover{
+    background:#38bdf8;
+    color:#020617;
+}
+
+/* CHAT INPUT */
+
+.fixify-input-area{
+    display:flex;
+    gap:8px;
+    padding:12px;
+    border-top:1px solid #1e293b;
+    background:#020617;
+}
+
+#fixifyInput{
+    flex:1;
+    background:#0f172a;
+    color:white;
+    border:1px solid #1e293b;
+    border-radius:22px;
+    padding:10px 14px;
+    outline:none;
+}
+
+#fixifyInput:focus{
+    border-color:#38bdf8;
+}
+
+#fixifySend{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#38bdf8;
+    color:#020617;
+    cursor:pointer;
+}
+
+/* TYPING */
+
+.fixify-typing{
+    display:flex;
+    gap:4px;
+    padding:12px;
+    width:55px;
+    background:#0f172a;
+    border-radius:13px;
+}
+
+.fixify-typing span{
+    width:6px;
+    height:6px;
+    background:#38bdf8;
+    border-radius:50%;
+    animation:fixifyTyping 1s infinite;
+}
+
+.fixify-typing span:nth-child(2){
+    animation-delay:.2s;
+}
+
+.fixify-typing span:nth-child(3){
+    animation-delay:.4s;
+}
+
+@keyframes fixifyTyping{
+
+    0%,100%{
+        opacity:.3;
+        transform:translateY(0);
+    }
+
+    50%{
+        opacity:1;
+        transform:translateY(-3px);
+    }
+
+}
+
+/* CHAT ACTION BUTTONS */
+
+.fixify-action{
+    display:inline-block;
+    margin-top:8px;
+    padding:8px 12px;
+    background:#38bdf8;
+    color:#020617;
+    text-decoration:none;
+    border-radius:18px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    header{
+        padding:20px;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    nav{
+        display:none;
+        position:absolute;
+        top:75px;
+        left:0;
+        width:100%;
+        background:#020617;
+        flex-direction:column;
+        text-align:center;
+        padding:20px 0;
+    }
+
+    nav.active{
+        display:flex;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .section{
+        padding:50px 20px;
+    }
+
+    /* CHATBOT MOBILE */
+
+    #fixifyChat{
+        right:15px;
+        bottom:145px;
+        width:calc(100vw - 30px);
+        height:500px;
+    }
+
+    #fixifyChatButton{
+        right:18px;
+        bottom:80px;
+    }
+
+}
+
+
+
+/* PROFESSIONAL CHATBOT ICONS */
+.fixify-message i,
+.fixify-option i,
+.fixify-action i{
+    color:#38bdf8;
+    margin-right:5px;
+}
+
+.fixify-action i{
+    color:#020617;
+}
+
+.fixify-option i{
+    font-size:11px;
+}
+
+/* =====================================================
+   END CHATBOT
+   ===================================================== */
+
+</style>
+
+</head>
+
+
 <body>
-<div class="container">
-    <h2>FIXIFY </h2>
 
-    <form>
-        <label>Full Name</label>
-        <input type="text" placeholder="Enter your name" required>
 
-        <label>Email</label>
-        <input type="email" placeholder="Enter your email" required>
+<!-- HEADER -->
 
-        <label>Phone Number</label>
-        <input type="tel" placeholder="Enter your phone number" required>
+<header>
 
-        
-    
-        <label>Gender</label>
-        <div class="gender">
-            <label><input type="radio" name="gender"> Male</label>
-            <label><input type="radio" name="gender"> Female</label>
+    <div class="logo">Fixify</div>
+
+    <div class="menu-btn" id="menuBtn">
+        ☰
+    </div>
+
+    <nav id="navbar">
+
+        <a href="service.html">Services</a>
+
+        <a href="login.html">Login</a>
+
+        <a href="register.html">Register</a>
+
+        <a href="about.html">About Us</a>
+
+    </nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1 id="typing"></h1>
+
+    <p>
+        Plumber, Electrician & Carpenter Services
+        All In One Platform
+    </p>
+
+    <a href="register.html" class="btn">
+        Get Started
+    </a>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Our Services
+    </h2>
+
+    <div class="cards">
+
+        <a href="plumber.html" class="card reveal">
+
+            <h3>
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                Plumber
+            </h3>
+
+            <p>
+                Professional plumbing services for homes and offices.
+            </p>
+
+        </a>
+
+
+        <a href="electrician.html" class="card reveal">
+
+            <h3>
+                <i class="fa-solid fa-bolt"></i>
+                Electrician
+            </h3>
+
+            <p>
+                Certified electricians for all electrical work.
+            </p>
+
+        </a>
+
+
+        <a href="carpenter.html" class="card reveal">
+
+            <h3>
+                <i class="fa-solid fa-hammer"></i>
+                Carpenter
+            </h3>
+
+            <p>
+                Furniture repair and custom woodwork solutions.
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="section stats">
+
+    <h2 class="section-title">
+        Our Achievements
+    </h2>
+
+    <div class="cards">
+
+        <div class="stat-box reveal">
+
+            <h2>500+</h2>
+
+            <p>
+                Happy Customers
+            </p>
+
         </div>
 
-        <label for="services">service</label>
-        <select id="services" name="services">
-            <option>Select services</option>
-            <option>plumber</option>
-            <option>Electrician</option>
-            <option>carpenter</option>
-        
-        </select>
 
-        <label>Address</label>
-        <textarea rows="3" placeholder="Enter your address"></textarea>
+        <div class="stat-box reveal">
 
-        <button type="submit">Submit</button>
-    </form>
+            <h2>150+</h2>
+
+            <p>
+                Expert Workers
+            </p>
+
+        </div>
+
+
+        <div class="stat-box reveal">
+
+            <h2>24/7</h2>
+
+            <p>
+                Support Available
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WHY CHOOSE FIXIFY -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Why Choose Fixify?
+    </h2>
+
+    <div class="cards">
+
+        <div class="card reveal">
+            Expert Technicians
+        </div>
+
+        <div class="card reveal">
+            Fast Service Booking
+        </div>
+
+        <div class="card reveal">
+            Trusted & Reliable
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 Fixify | All Rights Reserved
+    </p>
+
+</footer>
+
+
+<!-- TOP BUTTON -->
+
+<button id="topBtn">
+    ↑
+</button>
+
+
+<!-- =====================================================
+     FIXIFY CHATBOT HTML
+     ===================================================== -->
+
+<button id="fixifyChatButton" title="Chat with Fixify">
+
+    <i class="fa-solid fa-headset"></i>
+
+</button>
+
+
+<div id="fixifyChat">
+
+
+    <!-- CHAT HEADER -->
+
+    <div class="fixify-chat-header">
+
+        <div class="fixify-chat-title">
+
+            <div class="fixify-chat-icon">
+
+                <i class="fa-solid fa-headset"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Fixify Assistant</h3>
+
+                <span>
+                    ● Available 24/7
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button id="closeFixifyChat">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    <div id="fixifyMessages"></div>
+
+
+    <!-- INPUT -->
+
+    <div class="fixify-input-area">
+
+        <input
+            type="text"
+            id="fixifyInput"
+            placeholder="Ask about our services..."
+            autocomplete="off"
+        >
+
+        <button id="fixifySend">
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+        </button>
+
+    </div>
+
+
 </div>
 
+
+<script>
+
+
+/* =====================================================
+   EXISTING WEBSITE JAVASCRIPT
+   ===================================================== */
+
+
+/* MOBILE MENU */
+
+const menuBtn = document.getElementById("menuBtn");
+
+const navbar = document.getElementById("navbar");
+
+menuBtn.onclick = () => {
+
+    navbar.classList.toggle("active");
+
+};
+
+
+/* TYPING EFFECT */
+
+const text = "Welcome To Fixify";
+
+let i = 0;
+
+function typingEffect(){
+
+    if(i < text.length){
+
+        document.getElementById("typing").innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typingEffect,100);
+
+    }
+
+}
+
+typingEffect();
+
+
+/* SCROLL ANIMATION */
+
+const reveals = document.querySelectorAll(".reveal");
+
+function revealElements(){
+
+    reveals.forEach(item => {
+
+        const top = item.getBoundingClientRect().top;
+
+        if(top < window.innerHeight - 100){
+
+            item.classList.add("show");
+
+        }
+
+    });
+
+}
+
+
+reveals.forEach(item => {
+
+    item.classList.add("hidden");
+
+});
+
+
+window.addEventListener("scroll", revealElements);
+
+revealElements();
+
+
+/* TOP BUTTON */
+
+const topBtn = document.getElementById("topBtn");
+
+window.addEventListener("scroll", () => {
+
+    if(window.scrollY > 300){
+
+        topBtn.style.display = "block";
+
+    }
+
+    else{
+
+        topBtn.style.display = "none";
+
+    }
+
+});
+
+
+topBtn.onclick = () => {
+
+    window.scrollTo({
+
+        top:0,
+        behavior:"smooth"
+
+    });
+
+};
+
+
+/* =====================================================
+   FIXIFY CHATBOT JAVASCRIPT
+   ===================================================== */
+
+
+const fixifyChatButton =
+document.getElementById("fixifyChatButton");
+
+const fixifyChat =
+document.getElementById("fixifyChat");
+
+const closeFixifyChat =
+document.getElementById("closeFixifyChat");
+
+const fixifyMessages =
+document.getElementById("fixifyMessages");
+
+const fixifyInput =
+document.getElementById("fixifyInput");
+
+const fixifySend =
+document.getElementById("fixifySend");
+
+
+/* OPEN CHAT */
+
+fixifyChatButton.onclick = () => {
+
+    fixifyChat.style.display = "flex";
+
+    fixifyChatButton.style.display = "none";
+
+    fixifyInput.focus();
+
+    if(fixifyMessages.children.length === 0){
+
+        showWelcomeMessage();
+
+    }
+
+};
+
+
+/* CLOSE CHAT */
+
+closeFixifyChat.onclick = () => {
+
+    fixifyChat.style.display = "none";
+
+    fixifyChatButton.style.display = "block";
+
+};
+
+
+/* ADD MESSAGE */
+
+function addMessage(message,type="bot"){
+
+    const div = document.createElement("div");
+
+    div.className =
+    "fixify-message " +
+    (type === "user"
+        ? "fixify-user"
+        : "fixify-bot");
+
+    div.innerHTML = message;
+
+    fixifyMessages.appendChild(div);
+
+    fixifyMessages.scrollTop =
+    fixifyMessages.scrollHeight;
+
+}
+
+
+/* TYPING EFFECT */
+
+function showTyping(){
+
+    const typing = document.createElement("div");
+
+    typing.className = "fixify-typing";
+
+    typing.id = "fixifyTyping";
+
+    typing.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+    `;
+
+    fixifyMessages.appendChild(typing);
+
+    fixifyMessages.scrollTop =
+    fixifyMessages.scrollHeight;
+
+}
+
+
+function removeTyping(){
+
+    const typing =
+    document.getElementById("fixifyTyping");
+
+    if(typing){
+
+        typing.remove();
+
+    }
+
+}
+
+
+/* WELCOME */
+
+function showWelcomeMessage(){
+
+    addMessage(`
+        👋 Hello! Welcome to <strong>Fixify</strong>.<br><br>
+
+        I'm your Fixify Assistant and I'm available
+        <strong>24/7</strong> to help you with our home services.
+        <br><br>
+
+        You can ask me about our services, service types,
+        benefits, booking or contact options.
+
+        <div class="fixify-options">
+
+            <button class="fixify-option"
+            onclick="quickQuestion('What services do you provide?')">
+                <i class="fa-solid fa-toolbox"></i> Services
+            </button>
+
+            <button class="fixify-option"
+            onclick="quickQuestion('Tell me about plumber service')">
+                Plumber
+            </button>
+
+            <button class="fixify-option"
+            onclick="quickQuestion('Tell me about electrician service')">
+                <i class="fa-solid fa-bolt"></i> Electrician
+            </button>
+
+            <button class="fixify-option"
+            onclick="quickQuestion('Tell me about carpenter service')">
+                <i class="fa-solid fa-hammer"></i> Carpenter
+            </button>
+
+        </div>
+    `);
+
+}
+
+
+/* QUICK QUESTION */
+
+function quickQuestion(question){
+
+    addMessage(question,"user");
+
+    processQuestion(question);
+
+}
+
+
+/* SEND MESSAGE */
+
+function sendMessage(){
+
+    const question =
+    fixifyInput.value.trim();
+
+    if(question === "") return;
+
+    addMessage(question,"user");
+
+    fixifyInput.value = "";
+
+    processQuestion(question);
+
+}
+
+
+fixifySend.onclick = sendMessage;
+
+
+fixifyInput.addEventListener("keydown",(event)=>{
+
+    if(event.key === "Enter"){
+
+        sendMessage();
+
+    }
+
+});
+
+
+/* =====================================================
+   CHATBOT LOGIC
+   ===================================================== */
+
+
+function processQuestion(question){
+
+    showTyping();
+
+    setTimeout(()=>{
+
+        removeTyping();
+
+        const q =
+        question.toLowerCase();
+
+        /* SERVICES */
+
+        if(
+            q.includes("service") &&
+            !q.includes("plumber") &&
+            !q.includes("electric") &&
+            !q.includes("carpenter")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-house"></i> <strong>Fixify Home Services</strong><br><br>
+
+                We currently provide three main services:
+
+                <br><br>
+
+                <i class="fa-solid fa-screwdriver-wrench"></i> <strong>Plumber</strong><br>
+                Plumbing repair and maintenance services.
+
+                <br><br>
+
+                <i class="fa-solid fa-bolt"></i> <strong>Electrician</strong><br>
+                Electrical repair, installation and wiring services.
+
+                <br><br>
+
+                <i class="fa-solid fa-hammer"></i> <strong>Carpenter</strong><br>
+                Furniture repair, design and woodwork services.
+
+                <br><br>
+
+                Select a service below to know more.
+
+                <div class="fixify-options">
+
+                    <button class="fixify-option"
+                    onclick="quickQuestion('Tell me about plumber service')">
+                        <i class="fa-solid fa-screwdriver-wrench"></i> Plumber
+                    </button>
+
+                    <button class="fixify-option"
+                    onclick="quickQuestion('Tell me about electrician service')">
+                        <i class="fa-solid fa-bolt"></i> Electrician
+                    </button>
+
+                    <button class="fixify-option"
+                    onclick="quickQuestion('Tell me about carpenter service')">
+                        <i class="fa-solid fa-hammer"></i> Carpenter
+                    </button>
+
+                </div>
+            `);
+
+            return;
+
+        }
+
+
+        /* PLUMBER */
+
+        if(
+            q.includes("plumber") ||
+            q.includes("plumbing") ||
+            q.includes("pipe") ||
+            q.includes("leak") ||
+            q.includes("tap") ||
+            q.includes("bathroom") ||
+            q.includes("water tank") ||
+            q.includes("drain")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-screwdriver-wrench"></i> <strong>Fixify Plumbing Services</strong><br><br>
+
+                Our plumbing services help with common
+                home and office plumbing requirements.
+
+                <br><br>
+
+                <strong>Types of Plumbing Services:</strong>
+
+                <br><br>
+
+                <i class="fa-solid fa-droplet"></i> Leak Detection & Repair<br>
+                <i class="fa-solid fa-faucet-drip"></i> Tap & Faucet Repair<br>
+                <i class="fa-solid fa-shower"></i> Bathroom Plumbing<br>
+                <i class="fa-solid fa-wrench"></i> Pipe Installation & Replacement<br>
+                <i class="fa-solid fa-bath"></i> Drainage & Pipe Repair<br>
+                <i class="fa-solid fa-house"></i> Water Tank Cleaning & Services<br>
+                <i class="fa-solid fa-screwdriver-wrench"></i> Expert Plumbing Repair
+
+                <br><br>
+
+                <strong>Benefits:</strong><br>
+
+                ✓ Convenient home service<br>
+                ✓ Quick assistance<br>
+                ✓ Professional service support<br>
+                ✓ Multiple plumbing solutions
+
+                <br><br>
+
+                What would you like to do?
+
+                <br>
+
+                <a href="plumber.html"
+                class="fixify-action">
+                    View Plumber Services
+                </a>
+
+                <a href="booking.html?service=Plumber"
+                class="fixify-action">
+                    <i class="fa-solid fa-calendar-check"></i> Book Plumber
+                </a>
+            `);
+
+            return;
+
+        }
+
+
+        /* ELECTRICIAN */
+
+        if(
+            q.includes("electrician") ||
+            q.includes("electric") ||
+            q.includes("wiring") ||
+            q.includes("fan") ||
+            q.includes("switch") ||
+            q.includes("socket") ||
+            q.includes("light") ||
+            q.includes("inverter")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-bolt"></i> <strong>Fixify Electrical Services</strong><br><br>
+
+                Our electrician services cover common
+                electrical installation, repair and maintenance needs.
+
+                <br><br>
+
+                <strong>Types of Electrical Services:</strong>
+
+                <br><br>
+
+                <i class="fa-solid fa-lightbulb"></i> Light Installation & Repair<br>
+                <i class="fa-solid fa-plug"></i> Switch & Socket Services<br>
+                <i class="fa-solid fa-fan"></i> Fan Installation & Repair<br>
+                <i class="fa-solid fa-bolt"></i> Wiring & Rewiring<br>
+                <i class="fa-solid fa-battery-half"></i> Backup / Inverter Services<br>
+                <i class="fa-solid fa-house"></i> General Electrical Repair
+
+                <br><br>
+
+                <strong>Benefits:</strong><br>
+
+                ✓ Convenient home service<br>
+                ✓ Multiple electrical solutions<br>
+                ✓ Quick booking process<br>
+                ✓ Professional service support
+
+                <br><br>
+
+                <a href="electrician.html"
+                class="fixify-action">
+                    View Electrician Services
+                </a>
+
+                <a href="booking.html?service=Electrician"
+                class="fixify-action">
+                    <i class="fa-solid fa-calendar-check"></i> Book Electrician
+                </a>
+            `);
+
+            return;
+
+        }
+
+
+        /* CARPENTER */
+
+        if(
+            q.includes("carpenter") ||
+            q.includes("furniture") ||
+            q.includes("wood") ||
+            q.includes("door") ||
+            q.includes("polish")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-hammer"></i> <strong>Fixify Carpenter Services</strong><br><br>
+
+                Our carpenter services provide solutions
+                for furniture and general woodwork requirements.
+
+                <br><br>
+
+                <strong>Types of Carpenter Services:</strong>
+
+                <br><br>
+
+                <i class="fa-solid fa-couch"></i> Furniture Repair<br>
+                <i class="fa-solid fa-box"></i> Furniture Design<br>
+                <i class="fa-solid fa-brush"></i> Furniture Polishing<br>
+                <i class="fa-solid fa-door-open"></i> Door Repair & Fitting<br>
+                <i class="fa-solid fa-hammer"></i> Custom Woodwork<br>
+                <i class="fa-solid fa-screwdriver-wrench"></i> Furniture Fitting & Installation
+
+                <br><br>
+
+                <strong>Benefits:</strong><br>
+
+                ✓ Home service convenience<br>
+                ✓ Furniture repair solutions<br>
+                ✓ Custom woodwork options<br>
+                ✓ Easy booking
+
+                <br><br>
+
+                <a href="carpenter.html"
+                class="fixify-action">
+                    View Carpenter Services
+                </a>
+
+                <a href="booking.html?service=Carpenter"
+                class="fixify-action">
+                    <i class="fa-solid fa-calendar-check"></i> Book Carpenter
+                </a>
+            `);
+
+            return;
+
+        }
+
+
+        /* BOOKING */
+
+        if(
+            q.includes("book") ||
+            q.includes("booking") ||
+            q.includes("appointment")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-calendar-check"></i> <strong>Book a Fixify Service</strong><br><br>
+
+                You can book a service by selecting
+                your required service and providing
+                the requested details.
+
+                <br><br>
+
+                <a href="booking.html"
+                class="fixify-action">
+                    <i class="fa-solid fa-calendar-check"></i> Book a Service
+                </a>
+            `);
+
+            return;
+
+        }
+
+
+        /* CONTACT / CALL */
+
+        if(
+            q.includes("call") ||
+            q.includes("contact") ||
+            q.includes("phone") ||
+            q.includes("number")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-phone"></i> <strong>Contact Fixify</strong><br><br>
+
+                If you need direct assistance,
+                you can contact Fixify through the
+                available contact option.
+
+                <br><br>
+
+                <a href="tel:+919999999999"
+                class="fixify-action">
+                    <i class="fa-solid fa-phone"></i> Call Now
+                </a>
+            `);
+
+            return;
+
+        }
+
+
+        /* BENEFITS */
+
+        if(
+            q.includes("benefit") ||
+            q.includes("why fixify") ||
+            q.includes("why choose")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-star"></i> <strong>Why Choose Fixify?</strong><br><br>
+
+                ✓ Expert Technicians<br>
+                ✓ Fast Service Booking<br>
+                ✓ Trusted & Reliable<br>
+                ✓ Convenient Home Services<br>
+                ✓ Multiple Service Categories<br>
+                ✓ 24/7 Chat Support
+
+                <br><br>
+
+                You can ask me about any
+                Fixify service.
+            `);
+
+            return;
+
+        }
+
+
+        /* 24/7 */
+
+        if(
+            q.includes("24/7") ||
+            q.includes("24 7") ||
+            q.includes("available") ||
+            q.includes("support")
+        ){
+
+            addMessage(`
+                <i class="fa-solid fa-headset"></i> <strong>Fixify 24/7 Support</strong><br><br>
+
+                The Fixify Assistant is available
+                24/7 to help you understand our
+                services, service types, benefits
+                and booking options.
+                <br><br>
+
+                For direct assistance, you can
+                use the contact option.
+            `);
+
+            return;
+
+        }
+
+
+        /* HELLO */
+
+        if(
+            q.includes("hello") ||
+            q.includes("hi") ||
+            q.includes("hey") ||
+            q.includes("hii")
+        ){
+
+            addMessage(`
+                👋 Hello! Welcome to <strong>Fixify</strong>.
+
+                <br><br>
+
+                How can I help you today?
+
+                // <div class="fixify-options"
+                    <button class="fixify-option"
+                    onclick="quickQuestion('What services do you provide?')">
+                        <i class="fa-solid fa-toolbox"></i> Services
+                    </button>
+
+                    <button class="fixify-option"
+                    onclick="quickQuestion('Tell me about plumber service')">
+                        <i class="fa-solid fa-screwdriver-wrench"></i> Plumber
+                    </button>
+
+                    <button class="fixify-option"
+                    onclick="quickQuestion('Tell me about electrician service')">
+                        <i class="fa-solid fa-bolt"></i> Electrician
+                    </button>
+
+                    <button class="fixify-option"
+                    onclick="quickQuestion('Tell me about carpenter service')">
+                        <i class="fa-solid fa-hammer"></i> Carpenter
+                    </button>
+
+                </div>
+            `);
+
+            return;
+
+        }
+
+
+        /* THANK YOU */
+
+        if(
+            q.includes("thank") ||
+            q.includes("thanks")
+        ){
+
+            addMessage(`
+                😊 You're welcome!
+
+                <br><br>
+
+                I'm always here to help with
+                Fixify services.
+            `);
+
+            return;
+
+        }
+
+
+        /* DEFAULT RESPONSE */
+
+        addMessage(`
+            I can help you with Fixify-related
+            questions.
+
+            <br><br>
+
+            You can ask me about:
+
+            <br><br>
+
+            <i class="fa-solid fa-screwdriver-wrench"></i> Plumber Services<br>
+            <i class="fa-solid fa-bolt"></i> Electrician Services<br>
+            <i class="fa-solid fa-hammer"></i> Carpenter Services<br>
+            <i class="fa-solid fa-calendar-check"></i> Booking<br>
+            <i class="fa-solid fa-star"></i> Service Benefits<br>
+            <i class="fa-solid fa-phone"></i> Contact / Call
+
+            <br><br>
+
+            Try asking:
+            <strong>"Tell me about plumber service"</strong>
+        `);
+
+    },600);
+
+}
+
+
+</script>
+
+
 </body>
+
 </html>

@@ -1,177 +1,650 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>switch services- Fixify</title>
+
+<title>Fixify | Switch Services</title>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-  margin:0;
-  background:#0f172a;
-  font-family:Arial;
-  color:white;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
-nav {
-  background:#020617;
-  padding:15px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+html{
+scroll-behavior:smooth;
 }
 
-nav h2 {
-  color:#6366f1;
+body{
+background:#0f172a;
+color:white;
 }
 
-nav a {
-  color:white;
-  text-decoration:none;
-  margin-left:15px;
-  transition:0.3s;
+/* NAV */
+
+nav{
+
+background:#020617;
+
+padding:18px 40px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
 }
 
-nav a:hover {
-  color:#22c55e;
+.logo{
+
+font-size:28px;
+
+font-weight:bold;
+
+color:#38bdf8;
+
 }
 
-.hero {
-  height:70vh;
-  background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-  url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:40px;
-  text-align:center;
+.menu{
+
+display:flex;
+
+gap:20px;
+
 }
 
-.container {
-  padding:50px 20px;
-  text-align:center;
-  animation:fadeUp 1.5s;
+.menu a{
+
+color:white;
+
+text-decoration:none;
+
 }
 
-.services {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:20px;
-  margin-top:30px;
+.menu a:hover{
+
+color:#22c55e;
+
 }
 
-.box {
-  width:230px;
-  padding:20px;
-  border-radius:12px;
-  background:#e5e7eb;
-  color:black;
-  transition:0.3s;
+.menu-btn{
+
+display:none;
+
+font-size:30px;
+
+cursor:pointer;
+
 }
 
-.box:hover {
-  transform:translateY(-10px) scale(1.03);
+/* HERO */
+
+.hero{
+
+height:70vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+text-align:center;
+
+/* SAME IMAGE */
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.60),
+rgba(0,0,0,.60)
+),
+
+url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c")
+center/cover no-repeat;
+
 }
 
-.price {
-  display:block;
-  margin-top:10px;
-  font-size:20px;
-  font-weight:bold;
-  color:rgb(6, 8, 6);
+.hero h1{
+
+font-size:50px;
+
+}
+
+.hero p{
+
+margin-top:10px;
+
+color:#cbd5e1;
+
+}
+
+/* SEARCH */
+
+.search{
+
+padding:35px;
+
+text-align:center;
+
+}
+
+.search input{
+
+width:90%;
+
+max-width:520px;
+
+padding:15px;
+
+border:none;
+
+border-radius:30px;
+
+}
+
+/* CONTENT */
+
+.container{
+
+padding:60px 25px;
+
+text-align:center;
+
+}
+
+/* SERVICES */
+
+.services{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(230px,1fr));
+
+gap:25px;
+
+margin-top:40px;
+
+}
+
+.box{
+
+background:#020617;
+
+padding:30px;
+
+border-radius:18px;
+
+transition:.4s;
+
+}
+
+.box:hover{
+
+transform:
+translateY(-10px);
+
+box-shadow:
+0 0 20px #38bdf8;
+
+}
+
+.icon{
+
+font-size:45px;
+
+}
+
+.price{
+
+display:block;
+
+margin-top:15px;
+
+font-size:22px;
+
+color:#22c55e;
+
 }
 
 /* BUTTON */
-.btn {
-  margin-top:30px;
-  padding:12px 30px;
-  background:#16a34a;
-  border:none;
-  color:white;
-  border-radius:30px;
-  cursor:pointer;
-  transition:0.3s;
+
+.btn{
+
+margin-top:40px;
+
+padding:15px 40px;
+
+border:none;
+
+border-radius:40px;
+
+background:#16a34a;
+
+color:white;
+
+font-size:18px;
+
+cursor:pointer;
+
 }
 
-.btn:hover {
-  transform:scale(1.05);
-  background:#15803d;
+.btn:hover{
+
+transform:scale(1.05);
+
 }
 
-/* FOOTER */
-.footer {
-  background:#080325;
-  padding:20px;
-  text-align:center;
-  margin-top:40px;
+/* STATS */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+padding:50px;
+
+}
+
+.stat{
+
+background:#020617;
+
+padding:25px;
+
+border-radius:15px;
+
+}
+
+.stat h2{
+
+color:#38bdf8;
+
+}
+
+/* TOP BUTTON */
+
+#topBtn{
+
+position:fixed;
+
+right:20px;
+
+bottom:20px;
+
+display:none;
+
+padding:14px;
+
+border:none;
+
+border-radius:50%;
+
+background:#38bdf8;
+
+cursor:pointer;
+
 }
 
 /* ANIMATION */
-@keyframes fadeUp {
-  from {
-    opacity:0;
-    transform:translateY(40px);
-  }
-  to {
-    opacity:1;
-    transform:translateY(0);
-  }
+
+.hidden{
+
+opacity:0;
+
+transform:translateY(40px);
+
+transition:1s;
+
 }
+
+.show{
+
+opacity:1;
+
+transform:none;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.menu-btn{
+display:block;
+}
+
+.menu{
+
+display:none;
+
+position:absolute;
+
+top:70px;
+
+left:0;
+
+width:100%;
+
+background:#020617;
+
+flex-direction:column;
+
+padding:20px;
+
+text-align:center;
+
+}
+.icon{
+    font-size:45px;
+    margin-bottom:15px;
+    color:#38bdf8;
+}
+
+.menu.active{
+display:flex;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+nav{
+padding:18px;
+}
+
+}
+
+/* FOOTER */
+
+footer{
+
+background:#020617;
+
+padding:20px;
+
+text-align:center;
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav>
-  <h2>Fixify</h2>
-  <div>
-    <a href="project2.html">Home</a>
-    <a href="service.html">Services</a>
-  </div>
+
+<div class="logo">
+
+FIXIFY
+
+</div>
+
+<div
+class="menu-btn"
+id="menuBtn">
+
+☰
+
+</div>
+
+<div
+class="menu"
+id="menu">
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="service.html">
+
+Services
+
+</a>
+
+</div>
+
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  Switch Installation 🔌
+<section class="hero">
+
+<h1>
+
+Switch Installation 
+
+</h1>
+
+<p>
+
+Safe • Smart • Reliable
+
+</p>
+
+</section>
+
+<div class="search">
+
+<input
+id="search"
+placeholder="Search switch service...">
+
 </div>
 
-<!-- CONTENT -->
-<div class="container">
-  <h2>Safe & Reliable Switch Installation</h2>
-  <p>Keep your home safe with our professional switch installation service.</p>
+<section class="container">
 
-  <div class="services">
+<h2>
 
-    <div class="box">
-        🔌 Basic Switch Installation
-      <br><span class="price">₹250</span>
-    </div>
+Professional Switch Services
 
-    <div class="box">
-        💡 Smart Switch Installation
-      <br><span class="price">₹500</span>
-    </div>
+</h2>
 
-    <div class="box">
-        🔌 Switch Panel Installation
-      <br><span class="price">₹500</span>
-    </div>
+<p>
 
-    <div class="box">
-        💡 Emergency Switch Repair
-      <br><span class="price">₹550</span>
-    </div>
+Safe installation and repair solutions.
 
-  </div>
-  <button class="btn" onclick="window.location.href='booking.html'">Book Now</button>
+</p>
+
+<div class="services">
+
+<div class="box service">
+
+    <div class="icon">
+    <i class="fa-solid fa-toggle-on"></i>
 </div>
 
-<!-- FOOTER -->
-<div class="footer">
-  © 2026 Fixify | Contact: 99972XXXXX
+Basic Switch Installation
+
+<span class="price">
+₹250
+</span>
+
 </div>
+
+<div class="box service">
+
+<div class="icon">
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+</div>
+
+Smart Switch Installation
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+<div class="icon">
+    <i class="fa-solid fa-plug"></i>
+</div>
+
+Switch Panel Installation
+
+<span class="price">
+₹500
+</span>
+
+</div>
+
+<div class="box service">
+
+    <div class="icon">
+    <i class="fa-solid fa-bolt"></i>
+    </div>
+
+Emergency Switch Repair
+
+<span class="price">
+₹550
+</span>
+
+</div>
+
+</div>
+
+<button
+
+class="btn"
+
+onclick="window.location.href='booking.html?service=Switch Installation'">
+
+Book Now
+
+</button>
+
+<button class="btn" onclick="window.location.href='enquiry.html'">Enquire</button>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<h2>1300+</h2>
+<p>Installations</p>
+</div>
+
+<div class="stat">
+<h2>99%</h2>
+<p>Success Rate</p>
+</div>
+
+<div class="stat">
+<h2>24/7</h2>
+<p>Support</p>
+</div>
+
+</section>
+
+<button id="topBtn">
+↑
+</button>
+
+<footer>
+
+© 2026 Fixify
+
+</footer>
+
+<script>
+
+menuBtn.onclick=()=>{
+menu.classList.toggle("active");
+};
+
+search.addEventListener(
+
+"keyup",
+
+()=>{
+
+let value=
+search.value.toLowerCase();
+
+document
+.querySelectorAll(".service")
+
+.forEach(
+
+box=>{
+
+box.style.display=
+
+box.innerText
+.toLowerCase()
+.includes(value)
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
+
+});
+
+window.addEventListener(
+
+"scroll",
+
+()=>{
+
+topBtn.style.display=
+
+window.scrollY>300
+
+?
+
+"block"
+
+:
+
+"none";
+
+});
+
+topBtn.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+</script>
 
 </body>
+
 </html>

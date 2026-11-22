@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Fixify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1e2e;
+            color: white;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #111420;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            color: #3b82f6;
+        }
+        .sidebar a {
+            display: block;
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 10px 0;
+        }
+        .sidebar a:hover {
+            color: white;
+        }
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            position: relative;
+        }
+        .main-content h1 {
+            border-bottom: 2px solid #2d3748;
+            padding-bottom: 10px;
+        }
+        .profile-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .profile-table th, .profile-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #2d3748;
+        }
+        .profile-table th {
+            color: #a0aec0;
+            width: 200px;
+        }
+        .profile-table td input {
+            background-color: #2d3748;
+            color: white;
+            border: 1px solid #4a5568;
+            padding: 5px;
+            border-radius: 4px;
+            width: 100%;
+            display: none; /* Hidden by default */
+        }
+        .edit-btn, .save-btn {
+            background-color: #48bb78;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 16px;
+        }
+        .save-btn {
+            display: none; /* Hidden by default */
+            background-color: #3b82f6; /* Blue for save */
+        }
+        .edit-btn:hover { background-color: #38a169; }
+        .save-btn:hover { background-color: #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Fixify</h2>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="mybookings.html">My Bookings</a>
+        <a href="profile.html" style="color:white; font-weight:bold;">Profile</a>
+        <a href="index.html">Back to Home</a>
+        <a href="login.html">Logout</a>
+    </div>
+    <div class="main-content">
+        <h1>Profile Details</h1>
+        <button class="edit-btn" id="editBtn">Edit Profile</button>
+        <button class="save-btn" id="saveBtn">Save Changes</button>
+        
+        <table class="profile-table">
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>
+                        <span class="view-mode" id="nameView">Dummy User</span>
+                        <input type="text" class="edit-mode" id="nameEdit" value="Dummy User">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>
+                        <span class="view-mode" id="emailView">dummy.user@example.com</span>
+                        <input type="email" class="edit-mode" id="emailEdit" value="dummy.user@example.com">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>
+                        <span class="view-mode" id="phoneView">+91 9876543210</span>
+                        <input type="tel" class="edit-mode" id="phoneEdit" value="+91 9876543210">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>
+                        <span class="view-mode" id="addressView">123, Cyberpunk Street, Neo City</span>
+                        <input type="text" class="edit-mode" id="addressEdit" value="123, Cyberpunk Street, Neo City">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const editBtn = document.getElementById('editBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const viewModes = document.querySelectorAll('.view-mode');
+        const editModes = document.querySelectorAll('.edit-mode');
+
+        editBtn.addEventListener('click', () => {
+            editBtn.style.display = 'none';
+            saveBtn.style.display = 'inline-block';
+            viewModes.forEach(el => el.style.display = 'none');
+            editModes.forEach(el => el.style.display = 'inline-block');
+        });
+
+        saveBtn.addEventListener('click', () => {
+            // Here you would typically send data to backend
+            document.getElementById('nameView').textContent = document.getElementById('nameEdit').value;
+            document.getElementById('emailView').textContent = document.getElementById('emailEdit').value;
+            document.getElementById('phoneView').textContent = document.getElementById('phoneEdit').value;
+            document.getElementById('addressView').textContent = document.getElementById('addressEdit').value;
+
+            editBtn.style.display = 'inline-block';
+            saveBtn.style.display = 'none';
+            viewModes.forEach(el => el.style.display = 'inline-block');
+            editModes.forEach(el => el.style.display = 'none');
+        });
+    </script>
+</body>
+</html>

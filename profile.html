@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Fixify</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1e2e;
+            color: white;
+            margin: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #111420;
+            height: 100vh;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            color: #3b82f6;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 10px 0;
+        }
+
+        .sidebar a:hover {
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            position: relative;
+            min-width: 0;
+        }
+
+        .main-content h1 {
+            border-bottom: 2px solid #2d3748;
+            padding-bottom: 10px;
+        }
+
+        .profile-table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .profile-table th,
+        .profile-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .profile-table th {
+            color: #a0aec0;
+            width: 200px;
+        }
+
+        .profile-table input {
+            background-color: #2d3748;
+            color: white;
+            border: 1px solid #4a5568;
+            padding: 10px;
+            border-radius: 4px;
+            width: 100%;
+            display: none;
+        }
+
+        .edit-btn,
+        .save-btn {
+            background-color: #48bb78;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 16px;
+        }
+
+        .save-btn {
+            display: none;
+            background-color: #3b82f6;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .logout {
+            color: #ef4444 !important;
+            margin-top: 20px;
+        }
+
+        @media(max-width: 700px) {
+            body {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .edit-btn,
+            .save-btn {
+                position: static;
+                margin-top: 15px;
+            }
+
+            .profile-table th {
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>Fixify</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="mybookings.html">My Bookings</a>
+        <a href="profile.html" style="color:white;font-weight:bold;">Profile</a>
+        <a href="index.html">Back to Home</a>
+        <a href="#" class="logout" id="logoutBtn">Logout</a>
+
+    </div>
+
+    <div class="main-content">
+
+        <h1>Profile Details</h1>
+
+        <button class="edit-btn" id="editBtn">
+            Edit Profile
+        </button>
+
+        <button class="save-btn" id="saveBtn">
+            Save Changes
+        </button>
+
+        <table class="profile-table">
+
+            <tbody>
+
+                <tr>
+                    <th>Name</th>
+                    <td>
+                        <span class="view-mode" id="nameView"></span>
+
+                        <input type="text" id="nameEdit" class="edit-mode">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>
+                        <span class="view-mode" id="emailView"></span>
+
+                        <input type="email" id="emailEdit" class="edit-mode">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Phone Number</th>
+                    <td>
+                        <span class="view-mode" id="phoneView"></span>
+
+                        <input type="tel" id="phoneEdit" class="edit-mode">
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <p id="statusMessage" class="message"></p>
+
+    </div>
+
+
+    <script>
+
+        const API_URL =
+            "https://fixify-backend-eq17.onrender.com/api/users";
+
+        const editBtn = document.getElementById("editBtn");
+        const saveBtn = document.getElementById("saveBtn");
+
+        const statusMessage =
+            document.getElementById("statusMessage");
+
+        let currentUser = null;
+
+
+        // LOAD USER DATA
+
+        async function loadProfile() {
+
+            const token = localStorage.getItem("token");
+
+            const savedUser = localStorage.getItem("user");
+
+            if (!token || !savedUser) {
+
+                alert("Please login first.");
+
+                window.location.href = "login.html";
+
+                return;
+            }
+
+            try {
+
+                currentUser = JSON.parse(savedUser);
+
+                document.getElementById("nameView").textContent =
+                    currentUser.name || "";
+
+                document.getElementById("emailView").textContent =
+                    currentUser.email || "";
+
+                document.getElementById("phoneView").textContent =
+                    currentUser.phoneNumber || "Not added";
+
+                document.getElementById("nameEdit").value =
+                    currentUser.name || "";
+
+                document.getElementById("emailEdit").value =
+                    currentUser.email || "";
+
+                document.getElementById("phoneEdit").value =
+                    currentUser.phoneNumber || "";
+
+            } catch (error) {
+
+                console.error(error);
+
+                statusMessage.textContent =
+                    "Unable to load profile data.";
+
+            }
+
+        }
+
+
+        // EDIT PROFILE
+
+        editBtn.addEventListener("click", () => {
+
+            document.querySelectorAll(".view-mode").forEach(element => {
+                element.style.display = "none";
+            });
+
+            document.querySelectorAll(".edit-mode").forEach(element => {
+                element.style.display = "inline-block";
+            });
+
+            editBtn.style.display = "none";
+
+            saveBtn.style.display = "inline-block";
+
+            statusMessage.textContent = "";
+
+        });
+
+
+        // SAVE PROFILE TO MONGODB
+
+        saveBtn.addEventListener("click", async () => {
+
+            const token = localStorage.getItem("token");
+
+            const name =
+                document.getElementById("nameEdit").value.trim();
+
+            const email =
+                document.getElementById("emailEdit").value.trim();
+
+            const phoneNumber =
+                document.getElementById("phoneEdit").value.trim();
+
+            if (!name || !email || !phoneNumber) {
+
+                statusMessage.textContent =
+                    "Please fill all fields.";
+
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+                statusMessage.textContent =
+                    "Please enter a valid email.";
+
+                return;
+            }
+
+            saveBtn.disabled = true;
+
+            saveBtn.textContent = "Saving...";
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/profile`,
+                    {
+                        method: "PATCH",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            phoneNumber
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message || "Profile update failed"
+                    );
+
+                }
+
+                // Update localStorage with database response
+
+                currentUser = data.user;
+
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
+                );
+
+                // Update profile display
+
+                document.getElementById("nameView").textContent =
+                    data.user.name;
+
+                document.getElementById("emailView").textContent =
+                    data.user.email;
+
+                document.getElementById("phoneView").textContent =
+                    data.user.phoneNumber || "Not added";
+
+                document.querySelectorAll(".view-mode").forEach(element => {
+                    element.style.display = "inline";
+                });
+
+                document.querySelectorAll(".edit-mode").forEach(element => {
+                    element.style.display = "none";
+                });
+
+                editBtn.style.display = "inline-block";
+
+                saveBtn.style.display = "none";
+
+                statusMessage.textContent =
+                    "Profile updated successfully!";
+
+                statusMessage.style.color = "#48bb78";
+
+            } catch (error) {
+
+                console.error("Profile Update Error:", error);
+
+                statusMessage.textContent = error.message;
+
+                statusMessage.style.color = "#ef4444";
+
+            } finally {
+
+                saveBtn.disabled = false;
+
+                saveBtn.textContent = "Save Changes";
+
+            }
+
+        });
+
+
+        // LOGOUT
+
+        document.getElementById("logoutBtn")
+            .addEventListener("click", (event) => {
+
+                event.preventDefault();
+
+                localStorage.removeItem("user");
+
+                localStorage.removeItem("token");
+
+                window.location.href = "login.html";
+
+            });
+
+
+        // PAGE LOAD
+
+        window.addEventListener("DOMContentLoaded", loadProfile);
+
+    </script>
+
+</body>
+
+</html>

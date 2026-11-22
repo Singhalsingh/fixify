@@ -1,177 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bathroom Interior Design - Fixify</title>
+
+<title>Fixify | Bathroom Interior Design</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-  margin: 0;
-  background-color: #0f172a;
-  font-family: Arial, sans-serif;
-  color: white;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
-/* HERO SECTION */
-.hero {
-  height: 70vh;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-  url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c') center/cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  text-align: center;
-
-  /* Animation */
-  animation: fadeIn 1.5s ease;
+html{
+    scroll-behavior:smooth;
 }
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+
+/* NAV */
+
+nav{
+    background:#020617;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 40px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#38bdf8;
+}
+
+.menu{
+    display:flex;
+    gap:20px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+}
+
+.menu a:hover{
+    color:#22c55e;
+}
+
+.menu-btn{
+    display:none;
+    font-size:30px;
+    cursor:pointer;
+}
+
+
+/* HERO */
+
+.hero{
+    height:70vh;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.55)
+    ),
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c")
+    center/cover;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:52px;
+}
+
+.hero h1 i{
+    color:#38bdf8;
+    margin-right:8px;
+}
+
+.hero p{
+    margin-top:10px;
+    color:#cbd5e1;
+}
+
+
+/* SEARCH */
+
+.search{
+    padding:35px;
+    text-align:center;
+}
+
+.search input{
+    width:90%;
+    max-width:500px;
+    padding:15px;
+    border:none;
+    border-radius:30px;
+    outline:none;
+}
+
 
 /* SECTION */
-.container {
-  padding: 50px 20px;
-  text-align: center;
-  animation: fadeUp 1.5s ease;
+
+.container{
+    padding:60px 25px;
+    text-align:center;
 }
 
-/* SERVICES BOX */
-.services {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+.container > p{
+    margin-top:15px;
+    color:#cbd5e1;
 }
 
-.box {
-  width: 250px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #f5f5f5;
-  color: black;
-  transition: 0.3s;
 
-  animation: zoomIn 1s ease;
-}
+/* SERVICES */
 
-.box:hover {
-  transform: translateY(-10px) scale(1.05);
+.services{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+    margin-top:40px;
 }
 
-/* BUTTON */
-.btn {
-  margin-top: 20px;
-  padding: 12px 25px;
-  background: rgb(9, 224, 17);
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+.box{
+    background:#020617;
+    padding:30px;
+    border-radius:20px;
+    transition:.4s;
 }
 
-.btn:hover {
-  transform: scale(1.05);
-  background: rgb(7, 180, 14);
+.box:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #38bdf8;
 }
-nav {
-  background: #020617;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+.icon{
+    font-size:45px;
+    margin-bottom:15px;
+    color:#38bdf8;
 }
-nav a {
-  color: rgb(230, 226, 239);
-  text-decoration: none;
-  margin-left: 15px;
-  transition: 0.3s;
+
+.price{
+    display:block;
+    margin-top:15px;
+    font-size:22px;
+    color:#22c55e;
 }
+
+
+/* BUTTONS */
+
+.btn{
+    display:inline-block;
+    width:auto;
+    margin-top:40px;
+    margin-left:8px;
+    margin-right:8px;
+
+    padding:14px 30px;
+
+    border:none;
+    border-radius:40px;
+
+    background:#22c55e;
+    color:white;
+
+    font-size:18px;
+    cursor:pointer;
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    background:#16a34a;
+}
+
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+    padding:50px;
+}
+
+.stat{
+    background:#020617;
+    padding:25px;
+    border-radius:15px;
+}
+
+.stat h2{
+    color:#38bdf8;
+}
+
+.stat p{
+    margin-top:10px;
+    color:#cbd5e1;
+}
+
+
+/* ANIMATION */
+
+.hidden{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
+}
+
+.show{
+    opacity:1;
+    transform:none;
+}
+
+
+/* TOP BUTTON */
+
+#topBtn{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+
+    display:none;
+
+    padding:14px;
+    border:none;
+    border-radius:50%;
+
+    background:#38bdf8;
+    cursor:pointer;
+}
+
 
 /* FOOTER */
-.footer {
-  background: #080325;
-  padding: 20px;
-  text-align: center;
+
+footer{
+    background:#020617;
+    padding:20px;
+    text-align:center;
 }
 
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* MOBILE */
 
-@keyframes zoomIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+@media(max-width:768px){
+
+    .menu-btn{
+        display:block;
+    }
+
+    .menu{
+        display:none;
+
+        position:absolute;
+        top:70px;
+        left:0;
+
+        width:100%;
+
+        background:#020617;
+
+        flex-direction:column;
+        padding:20px;
+
+        text-align:center;
+    }
+
+    .menu.active{
+        display:flex;
+    }
+
+    .hero{
+        height:60vh;
+    }
+
+    .hero h1{
+        font-size:32px;
+        padding:0 15px;
+    }
+
+    .container{
+        padding:40px 20px;
+    }
+
+    .stats{
+        padding:30px 20px;
+    }
+
+    nav{
+        padding:18px;
+    }
+
+    .btn{
+        margin-left:5px;
+        margin-right:5px;
+    }
 }
 
 </style>
 
 </head>
 
+
 <body>
-    <nav>
-  <h2>Fixify</h2>
-  <div>
-    <a href="project2.html">Home</a>
-    <a href="service.html">Services</a>
-  </div>
+
+
+<!-- NAV -->
+
+<nav>
+
+    <div class="logo">
+        FIXIFY
+    </div>
+
+    <div class="menu-btn" id="menuBtn">
+        ☰
+    </div>
+
+    <div class="menu" id="menu">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="service.html">
+            Services
+        </a>
+
+    </div>
+
 </nav>
 
-<div class="hero">
-  Bathroom Interior Design 🛁
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        <i class="fa-solid fa-bath"></i>
+        Bathroom Interior Design
+    </h1>
+
+    <p>
+        Modern • Stylish • Functional
+    </p>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<div class="search">
+
+    <input
+        id="search"
+        placeholder="Search design feature..."
+    >
+
 </div>
 
-<div class="container">
-  <h2>Modern Bathroom Design Services</h2>
-  <p>We create stylish and functional bathroom interiors with modern designs and smart layouts.</p>
-</div>
 
-<div class="box service">
-<div class="icon">🚿</div>
-Shower Area Planning
-<span class="price">₹500</span>
-  </div>
+<!-- SERVICES -->
 
-  <div class="box">
-      shower area planning
-    <br><span class="price">₹500</span>
-  </div>
+<section class="container">
 
-  <div class="box">
-      Lighting setup
-    <br><span class="price">₹500</span>
-  </div>
+    <h2>
+        Modern Bathroom Design
+    </h2>
 
-  <div class="box">
-    Mirror & Cabinet<br>
-    <br><span class="price">₹550</span>
-  </div>
-</div>
-  <button class="btn" onclick="window.location.href='booking.html'">Book Design Now</button>
-</div>
+    <p>
+        Beautiful interiors with smart layouts.
+    </p>
 
-<div class="footer">
-  © 2026 Fixify | All Rights Reserved
-</div>
+
+    <div class="services">
+
+
+        <!-- TILE DESIGNING -->
+
+        <div class="box service">
+
+            <div class="icon">
+                <i class="fa-solid fa-ruler-combined"></i>
+            </div>
+
+            Tile Designing
+
+            <span class="price">
+                ₹500
+            </span>
+
+        </div>
+
+
+        <!-- SHOWER AREA -->
+
+        <div class="box service">
+
+            <div class="icon">
+                <i class="fa-solid fa-shower"></i>
+            </div>
+
+            Shower Area Planning
+
+            <span class="price">
+                ₹500
+            </span>
+
+        </div>
+
+
+        <!-- LIGHTING -->
+
+        <div class="box service">
+
+            <div class="icon">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
+            Lighting Setup
+
+            <span class="price">
+                ₹500
+            </span>
+
+        </div>
+
+
+        <!-- MIRROR & CABINET -->
+
+        <div class="box service">
+
+            <div class="icon">
+                <i class="fa-solid fa-cabinet-filing"></i>
+            </div>
+
+            Mirror & Cabinet
+
+            <span class="price">
+                ₹550
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <button
+        class="btn"
+        onclick="window.location.href='booking.html?service=Bathroom Interior'">
+
+        Book Design Now
+
+    </button>
+
+
+    <button
+        class="btn"
+        onclick="window.location.href='enquiry.html'">
+
+        Enquire
+
+    </button>
+
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <h2>
+            500+
+        </h2>
+
+        <p>
+            Projects
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>
+            95%
+        </h2>
+
+        <p>
+            Satisfaction
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>
+            24/7
+        </h2>
+
+        <p>
+            Support
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- TOP BUTTON -->
+
+<button id="topBtn">
+    ↑
+</button>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 Fixify
+
+</footer>
+
+
+<script>
+
+
+/* MENU */
+
+const menuBtn = document.getElementById("menuBtn");
+const menu = document.getElementById("menu");
+
+menuBtn.onclick = () => {
+
+    menu.classList.toggle("active");
+
+};
+
+
+/* SEARCH */
+
+const search = document.getElementById("search");
+
+search.addEventListener("keyup", () => {
+
+    let value = search.value.toLowerCase();
+
+    document
+        .querySelectorAll(".service")
+        .forEach(box => {
+
+            box.style.display =
+                box.innerText
+                .toLowerCase()
+                .includes(value)
+                ? "block"
+                : "none";
+
+        });
+
+});
+
+
+/* SCROLL ANIMATION */
+
+const items =
+    document.querySelectorAll(".box,.stat");
+
+items.forEach(x => {
+
+    x.classList.add("hidden");
+
+});
+
+
+window.addEventListener("scroll", () => {
+
+    items.forEach(x => {
+
+        if(
+            x.getBoundingClientRect().top
+            <
+            window.innerHeight - 100
+        ){
+
+            x.classList.add("show");
+
+        }
+
+    });
+
+});
+
+
+/* TOP BUTTON */
+
+const topBtn =
+    document.getElementById("topBtn");
+
+
+window.addEventListener("scroll", () => {
+
+    topBtn.style.display =
+        window.scrollY > 300
+        ? "block"
+        : "none";
+
+});
+
+
+topBtn.onclick = () => {
+
+    window.scrollTo({
+
+        top:0,
+        behavior:"smooth"
+
+    });
+
+};
+
+</script>
+
 
 </body>
+
 </html>

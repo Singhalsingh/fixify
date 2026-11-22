@@ -2,453 +2,517 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Fixify | Register</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI';
-}
-
-body{
-
-min-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-background:
-linear-gradient(
-135deg,
-#020617,
-#0f172a
-);
-
-padding:20px;
-
-color:white;
-
-}
-
-.form-container{
-
-width:100%;
-
-max-width:420px;
-
-background:
-rgba(255,255,255,.06);
-
-backdrop-filter:
-blur(14px);
-
-padding:35px;
-
-border-radius:20px;
-
-border:
-1px solid
-rgba(255,255,255,.08);
-
-}
-
-.logo{
-
-text-align:center;
-
-color:#38bdf8;
-
-font-size:30px;
-
-font-weight:bold;
-
-margin-bottom:15px;
-
-}
-
-.title{
-
-text-align:center;
-
-margin-bottom:25px;
-
-}
-
-.input-box{
-
-margin-bottom:15px;
-
-}
-
-.input-box input{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:10px;
-
-background:
-rgba(255,255,255,.08);
-
-color:white;
-
-outline:none;
-
-}
-
-.input-box input::placeholder{
-
-color:#cbd5e1;
-
-}
-
-.password{
-
-position:relative;
-
-}
-
-.toggle{
-
-position:absolute;
-
-right:15px;
-
-top:14px;
-
-cursor:pointer;
-
-}
-
-.strength{
-
-font-size:13px;
-
-margin-top:8px;
-
-}
-
-button{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:10px;
-
-background:
-linear-gradient(
-45deg,
-#22c55e,
-#4ade80
-);
-
-color:white;
-
-font-size:16px;
-
-cursor:pointer;
-
-}
-
-button:hover{
-
-transform:scale(1.02);
-
-}
-
-.message{
-
-display:none;
-
-margin-top:15px;
-
-padding:12px;
-
-background:#22c55e;
-
-border-radius:10px;
-
-text-align:center;
-
-}
-
-.bottom{
-
-text-align:center;
-
-margin-top:15px;
-
-}
-
-.bottom a{
-
-color:#4ade80;
-
-text-decoration:none;
-
-}
-
-.bottom a:hover{
-
-text-decoration:underline;
-
-}
-
-@media(max-width:768px){
-
-.form-container{
-
-padding:25px;
-
-}
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fixify | Register</title>
+
+    <!-- Google Sign-In Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Axios Library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #020617, #0f172a);
+            padding: 20px;
+            color: white;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, .06);
+            backdrop-filter: blur(14px);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .logo {
+            text-align: center;
+            color: #38bdf8;
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .08);
+            color: white;
+            outline: none;
+        }
+
+        .input-box input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .password {
+            position: relative;
+        }
+
+        .toggle {
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            cursor: pointer;
+        }
+
+        .strength {
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #22c55e, #4ade80);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: #22c55e;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: #ef4444;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .google-btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .bottom {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .bottom a {
+            color: #4ade80;
+            text-decoration: none;
+        }
+
+        .bottom a:hover {
+            text-decoration: underline;
+        }
+
+        @media(max-width: 768px) {
+            .form-container {
+                padding: 25px;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="form-container">
+    <div class="form-container">
+
+        <div class="logo">
+            FIXIFY
+        </div>
+
+        <h2 class="title">
+            Create Account
+        </h2>
+
+        <form id="registerForm">
 
-<div class="logo">
+            <div class="input-box">
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Full Name"
+                    required>
+            </div>
 
-FIXIFY
+            <div class="input-box">
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    required>
+            </div>
 
-</div>
+            <div class="input-box">
+                <input
+                    id="phoneNumber"
+                    type="tel"
+                    placeholder="Phone Number"
+                    required>
+            </div>
 
-<h2 class="title">
+            <div class="input-box password">
 
-Create Account 🚀
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Password (6-8 characters)"
+                    minlength="6"
+                    maxlength="8"
+                    required>
 
-</h2>
+                <span class="toggle" onclick="togglePass()">
+                    👁
+                </span>
 
-<form id="registerForm">
+                <div class="strength" id="strength"></div>
 
-<div class="input-box">
+            </div>
 
-<input
-id="name"
-placeholder="Full Name"
-required>
+            <div class="input-box">
+                <input
+                    id="confirm"
+                    type="password"
+                    placeholder="Confirm Password"
+                    required>
+            </div>
 
-</div>
+            <button id="btn" type="submit">
+                Register
+            </button>
 
-<div class="input-box">
+            <div class="message" id="msg"></div>
 
-<input
-id="email"
-type="email"
-placeholder="Email"
-required>
+            <div class="error-message" id="errorMsg"></div>
 
-</div>
+        </form>
 
-<div class="input-box password">
+        <div class="or-divider">
+            OR
+        </div>
 
-<input
-id="password"
-type="password"
-placeholder="Password"
-required>
+        <!-- Google Sign-In Button -->
 
-<span
-class="toggle"
-onclick="togglePass()">
+        <div class="google-btn-container">
 
-👁
+            <div
+                id="g_id_onload"
+                data-client_id="878486367421-8669019j001b16b0u4vqq4rdo46c5h8g.apps.googleusercontent.com"
+                data-context="signup"
+                data-ux_mode="popup"
+                data-callback="handleCredentialResponse"
+                data-auto_prompt="false">
+            </div>
 
-</span>
+            <div
+                class="g_id_signin"
+                data-type="standard"
+                data-theme="outline"
+                data-size="large">
+            </div>
 
-<div
-class="strength"
-id="strength">
+        </div>
 
-</div>
+        <div class="bottom">
 
-</div>
+            Already have an account?
 
-<div class="input-box">
+            <a href="login.html">
+                Login
+            </a>
 
-<input
-id="confirm"
-type="password"
-placeholder="Confirm Password"
-required>
+        </div>
 
-</div>
+    </div>
 
-<button id="btn">
 
-Register
+    <script>
 
-</button>
+        // Backend URL
+        const API_URL = "https://fixify-backend-eq17.onrender.com";
 
-<div
-class="message"
-id="success">
 
-✅ Registration Successful
+        // Show Password
+        function togglePass() {
 
-</div>
+            const pass = document.getElementById('password');
 
-</form>
+            pass.type = pass.type === 'password'
+                ? 'text'
+                : 'password';
 
-<div class="bottom">
+        }
 
-Already have account?
 
-<a href="login.html">
+        // Show Success Message
+        function showSuccess(message) {
 
-Login
+            const msg = document.getElementById("msg");
+            const errorMsg = document.getElementById("errorMsg");
 
-</a>
+            errorMsg.style.display = "none";
 
-</div>
+            msg.innerText = message;
+            msg.style.display = "block";
 
-</div>
+        }
 
-<script>
 
-/* SHOW PASSWORD */
+        // Show Error Message
+        function showError(message) {
 
-function togglePass(){
+            const msg = document.getElementById("msg");
+            const errorMsg = document.getElementById("errorMsg");
 
-const pass=
-document
-.getElementById(
-"password"
-);
+            msg.style.display = "none";
 
-pass.type=
+            errorMsg.innerText = message;
+            errorMsg.style.display = "block";
 
-pass.type==="password"
+        }
 
-?
 
-"text"
+        // GOOGLE REGISTRATION
 
-:
+        async function handleCredentialResponse(response) {
 
-"password";
+            try {
 
-}
+                if (!response || !response.credential) {
 
-/* STRENGTH */
+                    showError("Google credential not received.");
 
-password
-.addEventListener(
+                    return;
+                }
 
-"input",
+                showSuccess("Verifying Google account...");
 
-()=>{
+                const result = await axios.post(
 
-let value=
-password.value;
+                    `${API_URL}/api/users/auth/google`,
 
-if(
-value.length<6
-){
+                    {
+                        credential: response.credential
+                    },
 
-strength.innerHTML=
-"Weak Password";
+                    {
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
 
-strength.style.color=
-"red";
+                );
 
-}
+                console.log("Google Backend Response:", result.data);
 
-else if(
-value.length<10
-){
+                if (!result.data.success) {
 
-strength.innerHTML=
-"Medium Password";
+                    throw new Error(
+                        result.data.message || "Google registration failed."
+                    );
 
-strength.style.color=
-"orange";
+                }
 
-}
+                showSuccess("Google Registration Successful!");
 
-else{
+                setTimeout(function () {
 
-strength.innerHTML=
-"Strong Password";
+                    window.location.href = "dashboard.html";
 
-strength.style.color=
-"#22c55e";
+                }, 1000);
 
-}
+            }
 
-});
+            catch (error) {
 
-/* REGISTER */
+                console.error("Google Registration Error:", error);
 
-registerForm
-.addEventListener(
+                const errorMessage =
+                    error.response?.data?.message ||
+                    "Unable to connect to server. Please try again.";
 
-"submit",
+                showError(errorMessage);
 
-e=>{
+            }
 
-e.preventDefault();
+        }
 
-if(
-password.value
-!==
 
-confirm.value
-){
+        // MANUAL REGISTRATION
 
-alert(
-"Passwords do not match"
-);
+        document.getElementById('registerForm').addEventListener(
+            'submit',
+            async function (e) {
 
-return;
+                e.preventDefault();
 
-}
+                const btn = document.getElementById("btn");
 
-btn.innerHTML=
-"Creating...";
+                const name = document.getElementById('name').value.trim();
 
-setTimeout(()=>{
+                const email = document.getElementById('email').value.trim();
 
-success.style.display=
-"block";
+                const phoneNumber = document.getElementById('phoneNumber').value.trim();
 
-btn.innerHTML=
-"Registered";
+                const password = document.getElementById('password').value;
 
-setTimeout(()=>{
+                const confirm = document.getElementById('confirm').value;
 
-window.location.href=
-"login.html";
 
-},1800);
+                // Password Validation
 
-},1500);
+                if (password !== confirm) {
 
-});
+                    showError("Passwords don't match!");
 
-</script>
+                    return;
+
+                }
+
+
+                if (password.length < 6 || password.length > 8) {
+
+                    showError("Password must be 6-8 characters long.");
+
+                    return;
+
+                }
+
+
+                // User Data
+
+                const userData = {
+
+                    name,
+                    email,
+                    phoneNumber,
+                    password
+
+                };
+
+
+                try {
+
+                    btn.disabled = true;
+
+                    btn.innerText = "Registering...";
+
+                    showSuccess("Creating your account...");
+
+
+                    const response = await axios.post(
+
+                        `${API_URL}/api/users/create`,
+
+                        userData,
+
+                        {
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        }
+
+                    );
+
+
+                    console.log("Registration Response:", response.data);
+
+
+                    if (!response.data.success) {
+
+                        throw new Error(
+                            response.data.message || "Registration failed."
+                        );
+
+                    }
+
+
+                    showSuccess("Account created successfully!");
+
+
+                    setTimeout(function () {
+
+                        window.location.href = "dashboard.html";
+
+                    }, 1500);
+
+
+                }
+
+                catch (error) {
+
+                    console.error("Registration Error:", error);
+
+                    const errorMessage =
+                        error.response?.data?.message ||
+                        error.message ||
+                        "Registration failed! Please try again.";
+
+                    showError(errorMessage);
+
+                    btn.disabled = false;
+
+                    btn.innerText = "Register";
+
+                }
+
+            }
+
+        );
+
+    </script>
 
 </body>
+
 </html>

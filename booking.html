@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Book Service | Fixify</title>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <style>
 
 *{
@@ -190,7 +190,8 @@ Service
 <input
 type="text"
 id="service"
-readonly>
+placeholder="Enter service name"
+    required>
 
 </div>
 
@@ -248,6 +249,17 @@ required>
 
 </div>
 
+<div class="input">
+
+<label>
+Email
+</label>
+
+<input
+type="email"
+id="email"
+required>
+
 </div>
 
 <div class="input">
@@ -289,85 +301,67 @@ Confirm Booking
 
 <script>
 
-/* GET SERVICE */
+    /* GET SERVICE */
 
-const params =
-new URLSearchParams(
-window.location.search
-);
+    const params = new URLSearchParams(
+        window.location.search
+    );
 
-document
-.getElementById("service")
-.value =
-params.get("service")
-|| "General Service";
+    
 
-/* FORM */
 
-document
-.getElementById(
-"bookingForm"
-)
+    /* BOOKING FORM */
 
-.addEventListener(
-"submit",
+    document.getElementById("bookingForm")
+        .addEventListener("submit", function(e) {
+            e.preventDefault();
 
-function(e){
+            const service = document.getElementById("service").value;
+            const fullName = document.getElementById("name").value;
+            const phoneNumber = document.getElementById("phone").value;
+            const email = document.getElementById("email").value;
+            const bookingDate = document.getElementById("date").value;
+            const bookingTime = document.getElementById("time").value;
+            const address = document.getElementById("address").value;
+            const extraNotes = document.getElementById("notes").value;
 
-e.preventDefault();
+            // Updated bookingData keys to match the backend model
+            const bookingData = {
+                service,
+                name: fullName, // Changed from fullName to name
+                phone: phoneNumber, // Changed from phoneNumber to phone
+                email,
+                date: bookingDate, // Changed from bookingDate to date
+                time: bookingTime, // Changed from bookingTime to time
+                address,
+                notes: extraNotes // Changed from extraNotes to notes
+            };
 
-const name =
-document
-.getElementById("name")
-.value;
+            axios.post(
+                "https://fixify-backend-eq17.onrender.com/api/bookings/create-booking",
+                bookingData
+            )
+            .then(function(response) {
+                console.log("Success:", response.data);
 
-const phone =
-document
-.getElementById("phone")
-.value;
+                document.getElementById("success").style.display = "block";
+                document.getElementById("bookingForm").reset();
 
-if(
-name.length<3
-){
+                if (response.data.success && response.data.booking) {
+                    // Alert only if there is a specific email error case from backend
+                    // but the booking itself was saved. The previous emailSent check
+                    // might need adjusting based on actual backend response structure.
+                }
+            })
+            .catch(function(error) {
+                console.error("Booking Error:", error.response?.data || error.message);
 
-alert(
-"Enter valid name"
-);
-
-return;
-
-}
-
-if(
-phone.length<10
-){
-
-alert(
-"Enter valid number"
-);
-
-return;
-
-}
-
-document
-.getElementById(
-"success"
-)
-
-.style.display=
-"block";
-
-setTimeout(()=>{
-
-window.location.href=
-"project2.html";
-
-},2500);
-
-}
-
-);
+                alert(
+                    error.response?.data?.message ||
+                    "Booking submit nahi hui. Backend terminal check karo."
+                );
+            });
+        });
 
 </script>
 
