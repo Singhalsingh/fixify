@@ -230,8 +230,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email Address (Cannot be changed)</label>
-                    <input type="email" id="email" disabled>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
                 </div>
 
                 <div class="form-group">
@@ -295,7 +295,7 @@
 
         // UPDATE PROFILE
         document.getElementById("profileForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
+            e.preventEvent();
             const token = localStorage.getItem("token");
             const saveBtn = document.getElementById("saveProfileBtn");
             const statusMsg = document.getElementById("statusMsg");
@@ -305,6 +305,7 @@
             statusMsg.style.display = "none";
 
             const updatedName = document.getElementById("name").value.trim();
+            const updatedEmail = document.getElementById("email").value.trim();
             const updatedPhone = document.getElementById("phoneNumber").value.trim();
 
             try {
@@ -316,6 +317,7 @@
                     },
                     body: JSON.stringify({
                         name: updatedName,
+                        email: updatedEmail,
                         phoneNumber: updatedPhone
                     })
                 });
@@ -324,7 +326,12 @@
                 if (!res.ok) throw new Error(data.message || "Failed to update profile");
 
                 const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
-                const newUser = { ...currentUser, name: updatedName, phoneNumber: updatedPhone };
+                const newUser = {
+                    ...currentUser,
+                    name: updatedName,
+                    email: updatedEmail,
+                    phoneNumber: updatedPhone
+                };
                 localStorage.setItem("user", JSON.stringify(newUser));
 
                 statusMsg.textContent = "Profile updated successfully! ✅";

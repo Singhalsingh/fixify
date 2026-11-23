@@ -256,7 +256,7 @@
                 }
 
                 btn.disabled = true;
-                btn.innerText = "Authenticating with Google... ⏳";
+                btn.innerText = "Authenticating with Google... ";
 
                 const result = await axios.post(`${API_URL}/api/users/auth/google`, {
                     credential: response.credential
@@ -297,7 +297,7 @@
 
             try {
                 btn.disabled = true;
-                btn.innerText = "Logging in... ⏳";
+                btn.innerText = "Logging in... ";
 
                 const response = await axios.post(`${API_URL}/api/users/login`, {
                     email,
@@ -313,7 +313,7 @@
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("user", JSON.stringify(response.data.user));
 
-                btn.innerText = "Login Successful! Redirecting... 🎉";
+                btn.innerText = "Login Successful! Redirecting... ";
                 setTimeout(() => {
                     window.location.href = "dashboard.html";
                 }, 1200);
