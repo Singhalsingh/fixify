@@ -4,136 +4,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Fixify</title>
+    <title>My Profile - Fixify</title>
 
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1e2e;
-            color: white;
-            margin: 0;
             display: flex;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* UNIFIED SIDEBAR */
         .sidebar {
-            width: 250px;
-            background-color: #111420;
+            width: 240px;
             height: 100vh;
+            background: #020617;
             padding: 20px;
-            flex-shrink: 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            border-right: 1px solid #1e293b;
         }
 
+        .sidebar.hidden {
+            left: -240px;
+        }
+
+        /* Padding left ensures hamburger/close button never overlaps Fixify text */
         .sidebar h2 {
-            color: #3b82f6;
+            color: #0ea6e7;
+            margin-bottom: 30px;
+            padding-left: 42px;
+            font-size: 24px;
+            line-height: 32px;
         }
 
         .sidebar a {
             display: block;
-            color: #a0aec0;
+            color: #cbd5f5;
             text-decoration: none;
-            padding: 10px 0;
+            padding: 12px 14px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
-        .sidebar a:hover {
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #1e293b;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .sidebar a.logout {
+            margin-top: 25px;
+            color: #f87171 !important;
+        }
+
+        /* HAMBURGER / CLOSE BUTTON */
+        .hamburger {
+            width: 38px;
+            height: 38px;
+            font-size: 22px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
             color: white;
+            cursor: pointer;
+            z-index: 1100;
+            position: fixed;
+            left: 14px;
+            top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .main-content {
+        /* MAIN CONTENT */
+        .main {
             flex: 1;
-            padding: 40px;
-            position: relative;
+            padding: 25px;
+            transition: margin-left 0.3s ease;
+            margin-left: 240px;
             min-width: 0;
         }
 
-        .main-content h1 {
-            border-bottom: 2px solid #2d3748;
-            padding-bottom: 10px;
+        .main.shifted {
+            margin-left: 0;
         }
 
-        .profile-table {
-            width: 100%;
-            max-width: 800px;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 50px;
+            margin-bottom: 30px;
         }
 
-        .profile-table th,
-        .profile-table td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #2d3748;
+        /* PROFILE CARD */
+        .profile-card {
+            max-width: 520px;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 14px;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
         }
 
-        .profile-table th {
-            color: #a0aec0;
-            width: 200px;
+        .profile-card h3 {
+            color: #38bdf8;
+            margin-bottom: 20px;
+            font-size: 22px;
+            text-align: center;
         }
 
-        .profile-table input {
-            background-color: #2d3748;
-            color: white;
-            border: 1px solid #4a5568;
-            padding: 10px;
-            border-radius: 4px;
-            width: 100%;
-            display: none;
+        .form-group {
+            margin-bottom: 18px;
         }
 
-        .edit-btn,
-        .save-btn {
-            background-color: #48bb78;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            font-size: 16px;
-        }
-
-        .save-btn {
-            display: none;
-            background-color: #3b82f6;
-        }
-
-        .message {
-            margin-top: 20px;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
             font-size: 14px;
         }
 
-        .logout {
-            color: #ef4444 !important;
-            margin-top: 20px;
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            font-size: 15px;
+            outline: none;
         }
 
-        @media(max-width: 700px) {
-            body {
-                display: block;
-            }
+        .form-group input:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
 
+        .btn-save {
+            width: 100%;
+            padding: 13px;
+            background: #22c55e;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-save:hover:not(:disabled) {
+            background: #16a34a;
+        }
+
+        .btn-save:disabled {
+            background: #475569;
+            cursor: not-allowed;
+        }
+
+        .status-msg {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        @media(max-width: 768px) {
             .sidebar {
-                width: 100%;
-                height: auto;
+                left: -240px;
             }
-
-            .main-content {
-                padding: 20px;
+            .sidebar.show {
+                left: 0;
             }
-
-            .edit-btn,
-            .save-btn {
-                position: static;
-                margin-top: 15px;
-            }
-
-            .profile-table th {
-                width: 120px;
+            .main {
+                margin-left: 0;
             }
         }
     </style>
@@ -141,299 +202,154 @@
 
 <body>
 
-    <div class="sidebar">
+    <!-- HAMBURGER BUTTON -->
+    <button class="hamburger" id="toggleButton" aria-label="Toggle Menu">☰</button>
 
+    <!-- UNIFIED SIDEBAR -->
+    <div class="sidebar" id="sidebar">
         <h2>Fixify</h2>
-
         <a href="dashboard.html">Dashboard</a>
         <a href="mybookings.html">My Bookings</a>
-        <a href="profile.html" style="color:white;font-weight:bold;">Profile</a>
+        <a href="profile.html" class="active">Profile</a>
         <a href="index.html">Back to Home</a>
-        <a href="#" class="logout" id="logoutBtn">Logout</a>
-
+        <a href="#" class="logout" id="logoutButton">Logout</a>
     </div>
 
-    <div class="main-content">
+    <!-- MAIN CONTENT -->
+    <div class="main" id="mainContent">
+        <div class="header">
+            <h1>My Profile 👤</h1>
+        </div>
 
-        <h1>Profile Details</h1>
+        <div class="profile-card">
+            <h3>Update Your Details</h3>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
 
-        <button class="edit-btn" id="editBtn">
-            Edit Profile
-        </button>
+                <div class="form-group">
+                    <label for="email">Email Address (Cannot be changed)</label>
+                    <input type="email" id="email" disabled>
+                </div>
 
-        <button class="save-btn" id="saveBtn">
-            Save Changes
-        </button>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" placeholder="Enter your 10-digit phone number">
+                </div>
 
-        <table class="profile-table">
-
-            <tbody>
-
-                <tr>
-                    <th>Name</th>
-                    <td>
-                        <span class="view-mode" id="nameView"></span>
-
-                        <input type="text" id="nameEdit" class="edit-mode">
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>Email</th>
-                    <td>
-                        <span class="view-mode" id="emailView"></span>
-
-                        <input type="email" id="emailEdit" class="edit-mode">
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>Phone Number</th>
-                    <td>
-                        <span class="view-mode" id="phoneView"></span>
-
-                        <input type="tel" id="phoneEdit" class="edit-mode">
-                    </td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-        <p id="statusMessage" class="message"></p>
-
+                <button type="submit" class="btn-save" id="saveProfileBtn">Save Changes</button>
+                <div class="status-msg" id="statusMsg"></div>
+            </form>
+        </div>
     </div>
-
 
     <script>
+        const API_URL = "https://fixify-backend-eq17.onrender.com";
 
-        const API_URL =
-            "https://fixify-backend-eq17.onrender.com/api/users";
+        // SIDEBAR TOGGLE WITH ☰ <-> ✕ ICON CHANGE
+        const toggleButton = document.getElementById("toggleButton");
+        const sidebar = document.getElementById("sidebar");
+        const mainContent = document.getElementById("mainContent");
 
-        const editBtn = document.getElementById("editBtn");
-        const saveBtn = document.getElementById("saveBtn");
-
-        const statusMessage =
-            document.getElementById("statusMessage");
-
-        let currentUser = null;
-
-
-        // LOAD USER DATA
-
-        async function loadProfile() {
-
-            const token = localStorage.getItem("token");
-
-            const savedUser = localStorage.getItem("user");
-
-            if (!token || !savedUser) {
-
-                alert("Please login first.");
-
-                window.location.href = "login.html";
-
-                return;
-            }
-
-            try {
-
-                currentUser = JSON.parse(savedUser);
-
-                document.getElementById("nameView").textContent =
-                    currentUser.name || "";
-
-                document.getElementById("emailView").textContent =
-                    currentUser.email || "";
-
-                document.getElementById("phoneView").textContent =
-                    currentUser.phoneNumber || "Not added";
-
-                document.getElementById("nameEdit").value =
-                    currentUser.name || "";
-
-                document.getElementById("emailEdit").value =
-                    currentUser.email || "";
-
-                document.getElementById("phoneEdit").value =
-                    currentUser.phoneNumber || "";
-
-            } catch (error) {
-
-                console.error(error);
-
-                statusMessage.textContent =
-                    "Unable to load profile data.";
-
-            }
-
+        function updateHamburgerIcon() {
+            const isMobile = window.innerWidth <= 768;
+            const isOpen = isMobile
+                ? sidebar.classList.contains("show")
+                : !sidebar.classList.contains("hidden");
+            toggleButton.textContent = isOpen ? "✕" : "☰";
         }
 
-
-        // EDIT PROFILE
-
-        editBtn.addEventListener("click", () => {
-
-            document.querySelectorAll(".view-mode").forEach(element => {
-                element.style.display = "none";
-            });
-
-            document.querySelectorAll(".edit-mode").forEach(element => {
-                element.style.display = "inline-block";
-            });
-
-            editBtn.style.display = "none";
-
-            saveBtn.style.display = "inline-block";
-
-            statusMessage.textContent = "";
-
+        toggleButton.addEventListener("click", () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("hidden");
+                mainContent.classList.toggle("shifted");
+            }
+            updateHamburgerIcon();
         });
 
+        window.addEventListener("resize", updateHamburgerIcon);
 
-        // SAVE PROFILE TO MONGODB
-
-        saveBtn.addEventListener("click", async () => {
+        // LOAD PROFILE
+        window.addEventListener("DOMContentLoaded", () => {
+            updateHamburgerIcon();
 
             const token = localStorage.getItem("token");
-
-            const name =
-                document.getElementById("nameEdit").value.trim();
-
-            const email =
-                document.getElementById("emailEdit").value.trim();
-
-            const phoneNumber =
-                document.getElementById("phoneEdit").value.trim();
-
-            if (!name || !email || !phoneNumber) {
-
-                statusMessage.textContent =
-                    "Please fill all fields.";
-
+            if (!token) {
+                window.location.href = "login.html";
                 return;
             }
-
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-
-                statusMessage.textContent =
-                    "Please enter a valid email.";
-
-                return;
-            }
-
-            saveBtn.disabled = true;
-
-            saveBtn.textContent = "Saving...";
 
             try {
-
-                const response = await fetch(
-                    `${API_URL}/profile`,
-                    {
-                        method: "PATCH",
-
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`
-                        },
-
-                        body: JSON.stringify({
-                            name,
-                            email,
-                            phoneNumber
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        data.message || "Profile update failed"
-                    );
-
-                }
-
-                // Update localStorage with database response
-
-                currentUser = data.user;
-
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(data.user)
-                );
-
-                // Update profile display
-
-                document.getElementById("nameView").textContent =
-                    data.user.name;
-
-                document.getElementById("emailView").textContent =
-                    data.user.email;
-
-                document.getElementById("phoneView").textContent =
-                    data.user.phoneNumber || "Not added";
-
-                document.querySelectorAll(".view-mode").forEach(element => {
-                    element.style.display = "inline";
-                });
-
-                document.querySelectorAll(".edit-mode").forEach(element => {
-                    element.style.display = "none";
-                });
-
-                editBtn.style.display = "inline-block";
-
-                saveBtn.style.display = "none";
-
-                statusMessage.textContent =
-                    "Profile updated successfully!";
-
-                statusMessage.style.color = "#48bb78";
-
-            } catch (error) {
-
-                console.error("Profile Update Error:", error);
-
-                statusMessage.textContent = error.message;
-
-                statusMessage.style.color = "#ef4444";
-
-            } finally {
-
-                saveBtn.disabled = false;
-
-                saveBtn.textContent = "Save Changes";
-
+                const user = JSON.parse(localStorage.getItem("user") || "{}");
+                document.getElementById("name").value = user.name || "";
+                document.getElementById("email").value = user.email || "";
+                document.getElementById("phoneNumber").value = user.phoneNumber || user.phone || "";
+            } catch (err) {
+                console.error("Error reading user data:", err);
             }
-
         });
 
+        // UPDATE PROFILE
+        document.getElementById("profileForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const token = localStorage.getItem("token");
+            const saveBtn = document.getElementById("saveProfileBtn");
+            const statusMsg = document.getElementById("statusMsg");
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = "Saving...";
+            statusMsg.style.display = "none";
+
+            const updatedName = document.getElementById("name").value.trim();
+            const updatedPhone = document.getElementById("phoneNumber").value.trim();
+
+            try {
+                const res = await fetch(`${API_URL}/api/users/profile`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: updatedName,
+                        phoneNumber: updatedPhone
+                    })
+                });
+
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || "Failed to update profile");
+
+                const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+                const newUser = { ...currentUser, name: updatedName, phoneNumber: updatedPhone };
+                localStorage.setItem("user", JSON.stringify(newUser));
+
+                statusMsg.textContent = "Profile updated successfully! ✅";
+                statusMsg.style.background = "#16a34a";
+                statusMsg.style.color = "white";
+                statusMsg.style.display = "block";
+            } catch (err) {
+                statusMsg.textContent = err.message || "Could not update profile.";
+                statusMsg.style.background = "#ef4444";
+                statusMsg.style.color = "white";
+                statusMsg.style.display = "block";
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = "Save Changes";
+            }
+        });
 
         // LOGOUT
-
-        document.getElementById("logoutBtn")
-            .addEventListener("click", (event) => {
-
-                event.preventDefault();
-
-                localStorage.removeItem("user");
-
-                localStorage.removeItem("token");
-
-                window.location.href = "login.html";
-
-            });
-
-
-        // PAGE LOAD
-
-        window.addEventListener("DOMContentLoaded", loadProfile);
-
+        document.getElementById("logoutButton").addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location.href = "login.html";
+        });
     </script>
-
 </body>
 
 </html>

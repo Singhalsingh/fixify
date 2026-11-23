@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Fixify | Register</title>
 
     <!-- Google Sign-In Library -->
@@ -96,7 +95,9 @@
             background: linear-gradient(45deg, #22c55e, #4ade80);
             color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            transition: transform 0.1s ease, opacity 0.3s ease;
         }
 
         button:hover {
@@ -109,24 +110,29 @@
             transform: none;
         }
 
+        /* PREMIUM NOTIFICATION STYLE (No more duplicate button look!) */
         .message {
             display: none;
             margin-top: 15px;
             padding: 12px;
-            background: #22c55e;
+            background: rgba(34, 197, 94, 0.15); /* Translucent Green */
+            border: 1px solid #22c55e;
             border-radius: 10px;
             text-align: center;
-            color: white;
+            color: #4ade80;
+            font-weight: bold;
         }
 
         .error-message {
             display: none;
             margin-top: 15px;
             padding: 12px;
-            background: #ef4444;
+            background: rgba(239, 68, 68, 0.15); /* Translucent Red */
+            border: 1px solid #ef4444;
             border-radius: 10px;
             text-align: center;
-            color: white;
+            color: #f87171;
+            font-weight: bold;
         }
 
         .or-divider {
@@ -161,358 +167,191 @@
             }
         }
     </style>
-
 </head>
 
 <body>
 
     <div class="form-container">
-
-        <div class="logo">
-            FIXIFY
-        </div>
-
-        <h2 class="title">
-            Create Account
-        </h2>
+        <div class="logo">FIXIFY</div>
+        <h2 class="title">Create Account</h2>
 
         <form id="registerForm">
-
             <div class="input-box">
-                <input
-                    id="name"
-                    type="text"
-                    placeholder="Full Name"
-                    required>
+                <input id="name" type="text" placeholder="Full Name" required>
             </div>
 
             <div class="input-box">
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    required>
+                <input id="email" type="email" placeholder="Email" required>
             </div>
 
             <div class="input-box">
-                <input
-                    id="phoneNumber"
-                    type="tel"
-                    placeholder="Phone Number"
-                    required>
+                <input id="phoneNumber" type="tel" placeholder="Phone Number" required>
             </div>
 
             <div class="input-box password">
-
-                <input
-                    id="password"
-                    type="password"
-                    placeholder="Password (6-8 characters)"
-                    minlength="6"
-                    maxlength="8"
-                    required>
-
-                <span class="toggle" onclick="togglePass()">
-                    👁
-                </span>
-
+                <input id="password" type="password" placeholder="Password " required>
+                <span class="toggle" onclick="togglePass()">👁</span>
                 <div class="strength" id="strength"></div>
-
             </div>
 
             <div class="input-box">
-                <input
-                    id="confirm"
-                    type="password"
-                    placeholder="Confirm Password"
-                    required>
+                <input id="confirm" type="password" placeholder="Confirm Password" required>
             </div>
 
-            <button id="btn" type="submit">
-                Register
-            </button>
+            <button id="btn" type="submit">Register</button>
 
+            <!-- Status alerts (translucent boxes) -->
             <div class="message" id="msg"></div>
-
             <div class="error-message" id="errorMsg"></div>
-
         </form>
 
-        <div class="or-divider">
-            OR
-        </div>
+        <div class="or-divider">OR</div>
 
         <!-- Google Sign-In Button -->
-
         <div class="google-btn-container">
-
-            <div
-                id="g_id_onload"
-                data-client_id="878486367421-8669019j001b16b0u4vqq4rdo46c5h8g.apps.googleusercontent.com"
-                data-context="signup"
-                data-ux_mode="popup"
-                data-callback="handleCredentialResponse"
-                data-auto_prompt="false">
+            <div id="g_id_onload" 
+                 data-client_id="878486367421-8669019j001b16b0u4vqq4rdo46c5h8g.apps.googleusercontent.com"
+                 data-context="signup" 
+                 data-ux_mode="popup" 
+                 data-callback="handleCredentialResponse"
+                 data-auto_prompt="false">
             </div>
 
-            <div
-                class="g_id_signin"
-                data-type="standard"
-                data-theme="outline"
-                data-size="large">
+            <div class="g_id_signin" 
+                 data-type="standard" 
+                 data-theme="outline" 
+                 data-size="large">
             </div>
-
         </div>
 
         <div class="bottom">
-
-            Already have an account?
-
-            <a href="login.html">
-                Login
-            </a>
-
+            Already have an account? <a href="login.html">Login</a>
         </div>
-
     </div>
 
-
     <script>
-
-        // Backend URL
         const API_URL = "https://fixify-backend-eq17.onrender.com";
 
-
-        // Show Password
+        // Show/Hide Password Toggle
         function togglePass() {
-
             const pass = document.getElementById('password');
-
-            pass.type = pass.type === 'password'
-                ? 'text'
-                : 'password';
-
+            pass.type = pass.type === 'password' ? 'text' : 'password';
         }
 
-
-        // Show Success Message
+        // Show Clean Success message
         function showSuccess(message) {
-
             const msg = document.getElementById("msg");
             const errorMsg = document.getElementById("errorMsg");
-
             errorMsg.style.display = "none";
-
             msg.innerText = message;
             msg.style.display = "block";
-
         }
 
-
-        // Show Error Message
+        // Show Clean Error message
         function showError(message) {
-
             const msg = document.getElementById("msg");
             const errorMsg = document.getElementById("errorMsg");
-
             msg.style.display = "none";
-
             errorMsg.innerText = message;
             errorMsg.style.display = "block";
-
         }
 
-
-        // GOOGLE REGISTRATION
-
+        // 1. GOOGLE SIGN-UP HANDLER
         async function handleCredentialResponse(response) {
-
+            const btn = document.getElementById("btn");
             try {
-
                 if (!response || !response.credential) {
-
                     showError("Google credential not received.");
-
                     return;
                 }
 
+                // Hide Register button during Google loading to avoid clutter
+                btn.style.display = "none";
                 showSuccess("Verifying Google account...");
 
-                const result = await axios.post(
-
-                    `${API_URL}/api/users/auth/google`,
-
-                    {
-                        credential: response.credential
-                    },
-
-                    {
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    }
-
-                );
-
-                console.log("Google Backend Response:", result.data);
+                const result = await axios.post(`${API_URL}/api/users/auth/google`, {
+                    credential: response.credential
+                }, {
+                    headers: { "Content-Type": "application/json" }
+                });
 
                 if (!result.data.success) {
-
-                    throw new Error(
-                        result.data.message || "Google registration failed."
-                    );
-
+                    throw new Error(result.data.message || "Google registration failed.");
                 }
 
-                showSuccess("Google Registration Successful!");
+                // Save credentials
+                localStorage.setItem("token", result.data.token);
+                localStorage.setItem("user", JSON.stringify(result.data.user));
 
-                setTimeout(function () {
-
+                showSuccess("Google Account Registered! Entering Dashboard...");
+                setTimeout(() => {
                     window.location.href = "dashboard.html";
+                }, 1200);
 
-                }, 1000);
-
+            } catch (error) {
+                console.error("Google Signup Error:", error);
+                btn.style.display = "block"; // Show button again on error
+                showError(error.response?.data?.message || "Google verification failed.");
             }
-
-            catch (error) {
-
-                console.error("Google Registration Error:", error);
-
-                const errorMessage =
-                    error.response?.data?.message ||
-                    "Unable to connect to server. Please try again.";
-
-                showError(errorMessage);
-
-            }
-
         }
 
+        // 2. MANUAL SIGN-UP HANDLER
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-        // MANUAL REGISTRATION
+            const btn = document.getElementById("btn");
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
 
-        document.getElementById('registerForm').addEventListener(
-            'submit',
-            async function (e) {
-
-                e.preventDefault();
-
-                const btn = document.getElementById("btn");
-
-                const name = document.getElementById('name').value.trim();
-
-                const email = document.getElementById('email').value.trim();
-
-                const phoneNumber = document.getElementById('phoneNumber').value.trim();
-
-                const password = document.getElementById('password').value;
-
-                const confirm = document.getElementById('confirm').value;
-
-
-                // Password Validation
-
-                if (password !== confirm) {
-
-                    showError("Passwords don't match!");
-
-                    return;
-
-                }
-
-
-                if (password.length < 6 || password.length > 8) {
-
-                    showError("Password must be 6-8 characters long.");
-
-                    return;
-
-                }
-
-
-                // User Data
-
-                const userData = {
-
-                    name,
-                    email,
-                    phoneNumber,
-                    password
-
-                };
-
-
-                try {
-
-                    btn.disabled = true;
-
-                    btn.innerText = "Registering...";
-
-                    showSuccess("Creating your account...");
-
-
-                    const response = await axios.post(
-
-                        `${API_URL}/api/users/create`,
-
-                        userData,
-
-                        {
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
-                        }
-
-                    );
-
-
-                    console.log("Registration Response:", response.data);
-
-
-                    if (!response.data.success) {
-
-                        throw new Error(
-                            response.data.message || "Registration failed."
-                        );
-
-                    }
-
-
-                    showSuccess("Account created successfully!");
-
-
-                    setTimeout(function () {
-
-                        window.location.href = "dashboard.html";
-
-                    }, 1500);
-
-
-                }
-
-                catch (error) {
-
-                    console.error("Registration Error:", error);
-
-                    const errorMessage =
-                        error.response?.data?.message ||
-                        error.message ||
-                        "Registration failed! Please try again.";
-
-                    showError(errorMessage);
-
-                    btn.disabled = false;
-
-                    btn.innerText = "Register";
-
-                }
-
+            // Password mismatch validation
+            if (password !== confirm) {
+                showError("Passwords don't match!");
+                return;
             }
 
-        );
+            // Min length check
+            if (password.length < 6) {
+                showError("Password must be at least 6 characters long.");
+                return;
+            }
 
+            const userData = { name, email, phoneNumber, password };
+
+            try {
+                // Lock button state immediately and change text
+                btn.disabled = true;
+                btn.innerText = "Registering...";
+                showSuccess("Creating your account... Please wait.");
+
+                const response = await axios.post(`${API_URL}/api/users/create`, userData, {
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                if (!response.data.success) {
+                    throw new Error(response.data.message || "Registration failed.");
+                }
+
+                if (response.data.token) {
+                    localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("user", JSON.stringify(response.data.user || { name, email }));
+                }
+
+                showSuccess("Account created successfully! Redirecting...");
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1200);
+
+            } catch (error) {
+                console.error("Registration Error:", error);
+                btn.disabled = false;
+                btn.innerText = "Register";
+                showError(error.response?.data?.message || "Registration failed! Please try again.");
+            }
+        });
     </script>
-
 </body>
 
 </html>

@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Service | Fixify</title>
-    
-    <!-- Axios Library for Backend Communication -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <style>
@@ -18,7 +16,7 @@
         }
 
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
                         url("https://images.unsplash.com/photo-1581578731548-c64695cc6952");
             background-size: cover;
             background-position: center;
@@ -33,14 +31,14 @@
         .container {
             width: 100%;
             max-width: 550px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             padding: 35px;
             border-radius: 20px;
             color: white;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         h1 {
@@ -67,7 +65,7 @@
             width: 100%;
             padding: 14px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(2, 6, 23, 0.7);
             border-radius: 10px;
             outline: none;
             color: white;
@@ -103,18 +101,27 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.1s ease;
+            transition: background 0.3s ease, transform 0.1s ease, opacity 0.3s ease;
             box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
             margin-top: 10px;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover:not(:disabled) {
             background: #0284c7;
             transform: translateY(-2px);
         }
 
-        .btn-submit:active {
-            transform: translateY(0);
+        .btn-submit:disabled {
+            background: #475569;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.75;
+        }
+
+        /* Lock entire form while submitting */
+        .form-locked {
+            pointer-events: none;
+            opacity: 0.75;
         }
 
         .alert-message {
@@ -129,7 +136,11 @@
         .success {
             background: #22c55e;
             color: white;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .error {
+            background: #ef4444;
+            color: white;
         }
 
         .back-link {
@@ -146,7 +157,7 @@
             color: #38bdf8;
         }
 
-        @media(max-width: 768px){
+        @media(max-width: 768px) {
             .row {
                 grid-template-columns: 1fr;
                 gap: 0;
@@ -160,9 +171,9 @@
 
 <body>
 
-    <div class="container">
+    <div class="container" id="bookingContainer">
         <h1>Book Your Service</h1>
-        
+
         <form id="bookingForm">
             <div class="input-group">
                 <label for="service">Service Required</label>
@@ -177,7 +188,7 @@
             <div class="row">
                 <div class="input-group">
                     <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" placeholder="Your mobile number" required>
+                    <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required>
                 </div>
 
                 <div class="input-group">
@@ -205,35 +216,45 @@
 
             <div class="input-group">
                 <label for="notes">Extra Notes / Requirements (Optional)</label>
-                <textarea id="notes" placeholder="Any specific instruction for fixify technician..."></textarea>
+                <textarea id="notes" placeholder="Any specific instruction for Fixify technician..."></textarea>
             </div>
 
-            <button type="submit" class="btn-submit">Confirm Booking</button>
+            <button type="submit" class="btn-submit" id="submitBtn">Confirm Booking</button>
 
-            <div class="alert-message success" id="successAlert">
-                Booking Submitted Successfully! Redirecting to Dashboard...
-            </div>
+            <div class="alert-message" id="statusAlert"></div>
         </form>
-        
-        <a href="dashboard.html" class="back-link">← Cancel & Back to Dashboard</a>
+
+        <a href="dashboard.html" class="back-link" id="cancelLink">← Cancel & Back to Dashboard</a>
     </div>
 
     <script>
-        // BACKEND BASE API URL
         const API_URL = "https://fixify-backend-eq17.onrender.com";
+        let isSubmitting = false;
 
-        /* ----------------------------------------------------
-           1. AUTO PRE-FILL SERVICE FROM URL PARAMETER
-           (e.g., book.html?service=Electrician)
-           ---------------------------------------------------- */
+        // Helper to get today's local date in YYYY-MM-DD format
+        function getTodayDateString() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+            const day = String(now.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
+
         window.addEventListener("DOMContentLoaded", () => {
+            // 1. Block past dates in the date picker
+            const dateInput = document.getElementById("date");
+            const todayStr = getTodayDateString();
+            dateInput.min = todayStr;
+            dateInput.value = todayStr;
+
+            // 2. Pre-fill service from URL parameter
             const params = new URLSearchParams(window.location.search);
             const serviceParam = params.get("service");
             if (serviceParam) {
                 document.getElementById("service").value = serviceParam;
             }
 
-            // Also secure check if the user is already logged in
+            // 3. Check login token
             const token = localStorage.getItem("token");
             if (!token) {
                 alert("Please log in first to book a service!");
@@ -241,22 +262,31 @@
                 return;
             }
 
-            // Autofill user's profile info if saved locally
+            // 4. Pre-fill user details
             try {
                 const userData = JSON.parse(localStorage.getItem("user") || "{}");
                 if (userData.name) document.getElementById("name").value = userData.name;
                 if (userData.email) document.getElementById("email").value = userData.email;
-                if (userData.phoneNumber) document.getElementById("phone").value = userData.phoneNumber;
+                if (userData.phoneNumber || userData.phone) {
+                    document.getElementById("phone").value = userData.phoneNumber || userData.phone;
+                }
             } catch (err) {
                 console.error("Local user retrieval error:", err);
             }
         });
 
-        /* ----------------------------------------------------
-           2. SECURE FORM SUBMISSION WITH AUTHORIZATION TOKEN
-           ---------------------------------------------------- */
+        function showAlert(message, type) {
+            const alertBox = document.getElementById("statusAlert");
+            alertBox.textContent = message;
+            alertBox.className = `alert-message ${type}`;
+            alertBox.style.display = "block";
+        }
+
         document.getElementById("bookingForm").addEventListener("submit", function(e) {
             e.preventDefault();
+
+            // Prevent multiple taps / duplicate submissions
+            if (isSubmitting) return;
 
             const token = localStorage.getItem("token");
             if (!token) {
@@ -265,16 +295,30 @@
                 return;
             }
 
-            const service = document.getElementById("service").value;
-            const name = document.getElementById("name").value;
-            const phone = document.getElementById("phone").value;
-            const email = document.getElementById("email").value;
+            const service = document.getElementById("service").value.trim();
+            const name = document.getElementById("name").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const email = document.getElementById("email").value.trim();
             const date = document.getElementById("date").value;
             const time = document.getElementById("time").value;
-            const address = document.getElementById("address").value;
-            const notes = document.getElementById("notes").value;
+            const address = document.getElementById("address").value.trim();
+            const notes = document.getElementById("notes").value.trim();
 
-            // Mapping keys perfectly with Backend Schema Model
+            // Strict Past Date Validation
+            const todayStr = getTodayDateString();
+            if (date < todayStr) {
+                showAlert("You cannot book a service for a past date! Please select today or a future date.", "error");
+                return;
+            }
+
+            // Lock UI & Disable button immediately
+            isSubmitting = true;
+            const submitBtn = document.getElementById("submitBtn");
+            const container = document.getElementById("bookingContainer");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Booking in progress... Please wait ⏳";
+            container.classList.add("form-locked");
+
             const bookingData = {
                 service,
                 name,
@@ -286,35 +330,62 @@
                 notes: notes || ""
             };
 
-            // Post request including Authorization Header
             axios.post(`${API_URL}/api/bookings/create-booking`, bookingData, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
                 }
             })
-            .then(function(response) {
-                console.log("Booking Success Response:", response.data);
-
-                // Show Success Alert
-                const successAlert = document.getElementById("successAlert");
-                successAlert.style.display = "block";
-                document.getElementById("bookingForm").reset();
-
-                // Smoothly redirecting to Dashboard to view updated bookings
+            .then(function() {
+                showAlert("Booking Submitted Successfully! Redirecting to Dashboard...", "success");
                 setTimeout(() => {
                     window.location.href = "dashboard.html";
-                }, 2000);
+                }, 1500);
             })
             .catch(function(error) {
-                console.error("Booking Endpoint Error:", error.response?.data || error.message);
-                
-                alert(
-                    error.response?.data?.message || 
-                    "Booking submit nahi ho paayi. Please try again or check backend connection."
+                // Unlock UI only if request failed so user can retry
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Confirm Booking";
+                container.classList.remove("form-locked");
+
+                showAlert(
+                    error.response?.data?.message || "Unable to submit booking. Please try again.",
+                    "error"
                 );
             });
         });
+
+window.addEventListener("DOMContentLoaded", () => {
+    const dateInput = document.getElementById("date");
+
+    // Aaj ki exact local date nikalte hain (YYYY-MM-DD)
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    const todayStr = `${year}-${month}-${day}`;
+
+    // 1. Calendar mein aaj se pehle ki saari dates DISABLE kar do:
+    dateInput.min = todayStr;
+    dateInput.value = todayStr; // Default aaj ki date select rahegi
+});
+
+// Form submit hone se pehle extra check:
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    const selectedDate = document.getElementById("date").value;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    const todayStr = `${year}-${month}-${day}`;
+
+    if (selectedDate < todayStr) {
+        e.preventDefault();
+        alert("You cannot select a past date! Please choose today or a future date.");
+        return;
+    }
+});
     </script>
 
 </body>
