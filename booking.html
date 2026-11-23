@@ -300,21 +300,25 @@ Confirm Booking
 </div>
 
 <script>
+    /* GET SERVICE FROM URL */
+    const params = new URLSearchParams(window.location.search);
+    const serviceParam = params.get("service");
+    if (serviceParam) {
+        document.getElementById("service").value = serviceParam;
+    }
 
-    /* GET SERVICE */
-
-    const params = new URLSearchParams(
-        window.location.search
-    );
-
-    
-
-
-    /* BOOKING FORM */
-
+    /* BOOKING FORM SUBMISSION */
     document.getElementById("bookingForm")
         .addEventListener("submit", function(e) {
             e.preventDefault();
+
+            // Check if user is logged in
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Please log in first to book a service!");
+                window.location.href = "login.html";
+                return;
+            }
 
             const service = document.getElementById("service").value;
             const fullName = document.getElementById("name").value;
@@ -328,42 +332,44 @@ Confirm Booking
             // Updated bookingData keys to match the backend model
             const bookingData = {
                 service,
-                name: fullName, // Changed from fullName to name
-                phone: phoneNumber, // Changed from phoneNumber to phone
+                name: fullName,
+                phone: phoneNumber,
                 email,
-                date: bookingDate, // Changed from bookingDate to date
-                time: bookingTime, // Changed from bookingTime to time
+                date: bookingDate,
+                time: bookingTime,
                 address,
-                notes: extraNotes // Changed from extraNotes to notes
+                notes: extraNotes
             };
 
+            // Passing Authorization headers in Axios
             axios.post(
                 "https://fixify-backend-eq17.onrender.com/api/bookings/create-booking",
-                bookingData
+                bookingData,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                }
             )
             .then(function(response) {
                 console.log("Success:", response.data);
 
                 document.getElementById("success").style.display = "block";
                 document.getElementById("bookingForm").reset();
-
-                if (response.data.success && response.data.booking) {
-                    // Alert only if there is a specific email error case from backend
-                    // but the booking itself was saved. The previous emailSent check
-                    // might need adjusting based on actual backend response structure.
-                }
+                
+                alert("Booking successfully submitted!");
+                window.location.href = "dashboard.html"; // Booking ke baad automatic dashboard par le jayega
             })
             .catch(function(error) {
                 console.error("Booking Error:", error.response?.data || error.message);
 
                 alert(
                     error.response?.data?.message ||
-                    "Booking submit nahi hui. Backend terminal check karo."
+                    "Booking submit nahi hui. Please try again."
                 );
             });
         });
-
 </script>
-
 </body>
 </html>

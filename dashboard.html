@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial;
+            font-family: Arial, sans-serif;
         }
 
         body {
@@ -39,7 +39,7 @@
         }
 
         .sidebar h2 {
-            color: #4f46e5;
+            color: #0ea6e7;
             margin-bottom: 30px;
         }
 
@@ -51,7 +51,7 @@
         }
 
         .sidebar a:hover {
-            color: #22c55e;
+            color: #38bdf8;
         }
 
         /* MAIN */
@@ -60,6 +60,7 @@
             padding: 20px;
             transition: margin-left 0.3s ease;
             margin-left: 220px;
+            min-width: 0;
         }
 
         .main.shifted {
@@ -72,6 +73,8 @@
             justify-content: space-between;
             align-items: center;
             padding-left: 60px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         /* HAMBURGER */
@@ -106,8 +109,9 @@
         }
 
         .card p {
-            font-size: 20px;
-            color: #22c55e;
+            font-size: 25px;
+            color: #38bdf8;
+            font-weight: bold;
         }
 
         /* TABLE */
@@ -119,18 +123,23 @@
             overflow-x: auto;
         }
 
+        .table h3 {
+            margin-bottom: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 550px;
         }
 
         th, td {
-            padding: 10px;
+            padding: 12px;
+            text-align: left;
         }
 
         th {
             color: #94a3b8;
-            text-align: left;
         }
 
         tr {
@@ -142,24 +151,48 @@
             color: orange;
         }
 
-        .done {
+        .completed {
             color: #22c55e;
+        }
+
+        .confirmed {
+            color: #38bdf8;
+        }
+
+        .cancelled {
+            color: #f87171;
         }
 
         /* BUTTON */
         .btn {
             padding: 8px 12px;
-            background: #22c55e;
+            background: #0ea6e7;
             border: none;
             color: white;
             border-radius: 5px;
             cursor: pointer;
         }
 
+        .btn:hover {
+            background: #0284c7;
+        }
+
         .logout {
             margin-top: 20px;
             display: block;
-            color: red !important;
+            color: #f87171 !important;
+        }
+
+        .message {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+        }
+
+        .refresh-info {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 12px;
         }
 
         @media(max-width: 768px) {
@@ -174,14 +207,17 @@
             .main {
                 margin-left: 0;
             }
+
+            .header {
+                padding-left: 45px;
+            }
         }
     </style>
-
 </head>
 
 <body>
 
-    <!-- HAMBURGER BUTTON -->
+    <!-- HAMBURGER -->
     <button class="hamburger" id="toggleButton">☰</button>
 
     <!-- SIDEBAR -->
@@ -190,11 +226,8 @@
         <h2>Fixify</h2>
 
         <a href="dashboard.html">Dashboard</a>
-
         <a href="mybookings.html">My Bookings</a>
-
         <a href="profile.html">Profile</a>
-
         <a href="index.html">Back to Home</a>
 
         <a href="#" class="logout" id="logoutButton">Logout</a>
@@ -213,17 +246,17 @@
 
             <div class="card">
                 <h3>Total Bookings</h3>
-                <p>5</p>
+                <p id="totalBookings">0</p>
             </div>
 
             <div class="card">
                 <h3>Pending Services</h3>
-                <p>2</p>
+                <p id="pendingBookings">0</p>
             </div>
 
             <div class="card">
                 <h3>Completed</h3>
-                <p>3</p>
+                <p id="completedBookings">0</p>
             </div>
 
         </div>
@@ -239,37 +272,17 @@
                     <tr>
                         <th>Service</th>
                         <th>Date</th>
+                        <th>Time</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="bookingTableBody">
 
                     <tr>
-                        <td>Painting</td>
-                        <td>12 June</td>
-                        <td class="pending">Pending</td>
-                        <td>
-                            <button class="btn">View</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Electrician</td>
-                        <td>10 June</td>
-                        <td class="done">Completed</td>
-                        <td>
-                            <button class="btn">View</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Carpenter</td>
-                        <td>8 June</td>
-                        <td class="done">Completed</td>
-                        <td>
-                            <button class="btn">View</button>
+                        <td colspan="5" class="message">
+                            Loading your bookings...
                         </td>
                     </tr>
 
@@ -277,49 +290,215 @@
 
             </table>
 
+            <p class="refresh-info">
+                Dashboard automatically refreshes every 15 seconds.
+            </p>
+
         </div>
 
     </div>
 
     <script>
 
-        // LOAD USER DATA
-        window.addEventListener("DOMContentLoaded", () => {
+        // BACKEND API
+        const API_URL = "https://fixify-backend-eq17.onrender.com";
 
-            const welcomeElement =
-                document.getElementById("welcomeMessage");
+        let refreshInterval;
+
+        // HTML SECURITY
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[char]);
+        }
+
+        // FORMAT DATE
+        function formatDate(dateValue) {
+
+            if (!dateValue) return "N/A";
+
+            const date = new Date(dateValue);
+
+            if (isNaN(date.getTime())) {
+                return escapeHTML(dateValue);
+            }
+
+            return date.toLocaleDateString("en-IN");
+        }
+
+        // LOAD USER DATA
+        function loadUserData() {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                window.location.href = "login.html";
+                return false;
+            }
 
             try {
 
                 const userData = JSON.parse(
-                    localStorage.getItem("user")
+                    localStorage.getItem("user") || "{}"
                 );
 
-                if (userData && userData.name) {
-
-                    welcomeElement.textContent =
+                if (userData.name) {
+                    document.getElementById("welcomeMessage").textContent =
                         `Welcome, ${userData.name} 👋`;
-
                 }
 
             } catch (error) {
-
                 console.error("User Data Error:", error);
-
             }
 
-        });
+            return true;
+        }
 
+        // STATUS CLASS
+        function getStatusClass(status) {
+
+            const value = String(status || "Pending").toLowerCase();
+
+            if (value === "completed") return "completed";
+
+            if (value === "confirmed") return "confirmed";
+
+            if (value === "cancelled") return "cancelled";
+
+            return "pending";
+        }
+
+        // LOAD CUSTOMER BOOKINGS
+        async function loadBookings() {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const tableBody = document.getElementById("bookingTableBody");
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/api/bookings/my-bookings`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                if (response.status === 401) {
+
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+
+                    window.location.href = "login.html";
+                    return;
+                }
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to load bookings");
+                }
+
+                const bookings = data.bookings || [];
+
+                // UPDATE STATS
+                const pending = bookings.filter(booking =>
+                    String(booking.status || "Pending").toLowerCase() === "pending"
+                ).length;
+
+                const completed = bookings.filter(booking =>
+                    String(booking.status || "").toLowerCase() === "completed"
+                ).length;
+
+                document.getElementById("totalBookings").textContent =
+                    bookings.length;
+
+                document.getElementById("pendingBookings").textContent =
+                    pending;
+
+                document.getElementById("completedBookings").textContent =
+                    completed;
+
+                // EMPTY BOOKINGS
+                if (bookings.length === 0) {
+
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="message">
+                                No bookings found. Book your first service!
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+                }
+
+                // DISPLAY BOOKINGS
+                tableBody.innerHTML = bookings.map(booking => {
+
+                    const status = booking.status || "Pending";
+
+                    return `
+                        <tr>
+                            <td>${escapeHTML(booking.service)}</td>
+
+                            <td>${formatDate(booking.date)}</td>
+
+                            <td>${escapeHTML(booking.time || "N/A")}</td>
+
+                            <td class="${getStatusClass(status)}">
+                                ${escapeHTML(status)}
+                            </td>
+
+                            <td>
+                                <button
+                                    class="btn"
+                                    onclick="viewBooking('${escapeHTML(booking._id)}')">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                }).join("");
+
+            } catch (error) {
+
+                console.error("Booking Fetch Error:", error);
+
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="message">
+                            Unable to load bookings. Please try again.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // VIEW BOOKING
+        function viewBooking(id) {
+
+            alert("Booking ID: " + id);
+        }
 
         // SIDEBAR TOGGLE
-        const toggleButton =
-            document.getElementById("toggleButton");
-
-        const sidebar =
-            document.getElementById("sidebar");
-
-        const mainContent =
-            document.getElementById("mainContent");
+        const toggleButton = document.getElementById("toggleButton");
+        const sidebar = document.getElementById("sidebar");
+        const mainContent = document.getElementById("mainContent");
 
         toggleButton.addEventListener("click", () => {
 
@@ -330,12 +509,13 @@
 
         });
 
-
         // LOGOUT
         document.getElementById("logoutButton")
-            .addEventListener("click", (event) => {
+            .addEventListener("click", event => {
 
                 event.preventDefault();
+
+                clearInterval(refreshInterval);
 
                 localStorage.removeItem("user");
                 localStorage.removeItem("token");
@@ -343,6 +523,18 @@
                 window.location.href = "login.html";
 
             });
+
+        // INITIALIZE DASHBOARD
+        window.addEventListener("DOMContentLoaded", () => {
+
+            if (!loadUserData()) return;
+
+            loadBookings();
+
+            // AUTO REFRESH EVERY 15 SECONDS
+            refreshInterval = setInterval(loadBookings, 15000);
+
+        });
 
     </script>
 
