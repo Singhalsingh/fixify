@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,16 +51,28 @@
         }
         .status-pending { color: #f6ad55; }
         .status-completed { color: #48bb78; }
+        .status-confirmed { color: #38bdf8; }
+        .status-cancelled { color: #f87171; }
+        
         .view-btn {
-            background-color: #48bb78;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
         }
+        .view-btn:hover {
+            background-color: #2563eb;
+        }
+        .message {
+            text-align: center;
+            padding: 25px;
+            color: #a0aec0;
+        }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <h2>Fixify</h2>
@@ -67,40 +80,148 @@
         <a href="mybookings.html" style="color:white; font-weight:bold;">My Bookings</a>
         <a href="profile.html">Profile</a>
         <a href="index.html">Back to Home</a>
-        <a href="login.html">Logout</a>
+        <a href="#" id="logoutButton" style="color: #f87171;">Logout</a>
     </div>
+
     <div class="main-content">
-        <h1>My Bookings</h1>
+        <h1>My Bookings 📅</h1>
         <table class="booking-table">
             <thead>
                 <tr>
                     <th>Service</th>
                     <th>Date</th>
+                    <th>Time</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="bookingTableBody">
                 <tr>
-                    <td>Plumbing</td>
-                    <td>12 June</td>
-                    <td class="status-pending">Pending</td>
-                    <td><button class="view-btn">View</button></td>
-                </tr>
-                <tr>
-                    <td>Electrician</td>
-                    <td>10 June</td>
-                    <td class="status-completed">Completed</td>
-                    <td><button class="view-btn">View</button></td>
-                </tr>
-                <tr>
-                    <td>Carpenter</td>
-                    <td>8 June</td>
-                    <td class="status-completed">Completed</td>
-                    <td><button class="view-btn">View</button></td>
+                    <td colspan="5" class="message">
+                        Loading your booking history...
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <script>
+        const API_URL = "https://fixify-backend-eq17.onrender.com";
+
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[char]);
+        }
+
+        function formatDate(dateValue) {
+            if (!dateValue) return "N/A";
+            const date = new Date(dateValue);
+            if (isNaN(date.getTime())) {
+                return escapeHTML(dateValue);
+            }
+            return date.toLocaleDateString("en-IN");
+        }
+
+        function getStatusClass(status) {
+            const value = String(status || "Pending").toLowerCase();
+            if (value === "completed") return "status-completed";
+            if (value === "confirmed") return "status-confirmed";
+            if (value === "cancelled") return "status-cancelled";
+            return "status-pending";
+        }
+
+        async function fetchMyBookings() {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const tableBody = document.getElementById("bookingTableBody");
+
+            try {
+                const response = await fetch(`${API_URL}/api/bookings/my-bookings`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.status === 401) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    window.location.href = "login.html";
+                    return;
+                }
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to load bookings");
+                }
+
+                const bookings = data.bookings || [];
+
+                if (bookings.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="message">
+                                No bookings found. Book your first service!
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tableBody.innerHTML = bookings.map(booking => {
+                    const status = booking.status || "Pending";
+                    return `
+                        <tr>
+                            <td>${escapeHTML(booking.service)}</td>
+                            <td>${formatDate(booking.date)}</td>
+                            <td>${escapeHTML(booking.time || "N/A")}</td>
+                            <td class="${getStatusClass(status)}">
+                                <strong>${escapeHTML(status)}</strong>
+                            </td>
+                            <td>
+                                <button class="view-btn" onclick="viewBooking('${escapeHTML(booking._id)}')">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join("");
+
+            } catch (error) {
+                console.error("Booking Fetch Error:", error);
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="message" style="color: #f87171;">
+                            Unable to load bookings. Please try again.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function viewBooking(id) {
+            alert("Booking ID: " + id);
+        }
+
+        document.getElementById("logoutButton").addEventListener("click", event => {
+            event.preventDefault();
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+        });
+
+        window.addEventListener("DOMContentLoaded", fetchMyBookings);
+    </script>
 </body>
 </html>
